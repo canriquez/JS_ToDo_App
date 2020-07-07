@@ -1,3 +1,4 @@
+require('webpack-icons-installer');
 import 'bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './style.css';
@@ -49,7 +50,14 @@ function renderItems(project) {
 
     let i = 0;
     for (let item of book.getSingleProject(project).getProjectItems()) {
-        htmlTag += `<div clas="projectItem" id="item${i}"><p class="list-group-item list-group-item-action">${item.getTitle()}</p></div>`
+        htmlTag += `<div clas="projectItem" id="item${i}">
+                <div class="list-group-item list-group-item-action">
+                <h3>${item.getTitle()}</h3>
+                <p>${item.getDescription()}</p>
+                    <span id="edit${i}" class="glyphicon glyphicon-pencil"></span>
+                    <span id="remove${i}" class="glyphicon glyphicon-remove"></span>
+                </div>
+            </div>`
         i += 1;
     }
 
