@@ -11,6 +11,7 @@ export const todoBook = (username) => {
         addProject(project);
     }
     const getProjects = () => projects;
+    const getSingleProject = (index) => projects[index];
     const addProject = (project) => { projects.push(project) };
     const removeProject = (projectId) => {
         if (projectId <= project.length - 1) {
@@ -27,6 +28,7 @@ export const todoBook = (username) => {
         changeUser,
         initialize,
         getProjects,
+        getSingleProject,
         addProject,
         removeProject,
         clearProjects

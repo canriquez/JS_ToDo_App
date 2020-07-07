@@ -1,0 +1,27 @@
+/* Navigation */
+
+#brandLogo {
+    width: 50px;
+}
+
+.projectBook {
+    max-width: 1200px;
+    margin: 0 auto;
+    height: 80vh;
+    overflow: hidden;
+    display: grid;
+    grid-gap: 0;
+    grid-template-columns: 25% 75%;
+    grid-template-areas: "projects todoItems";
+}
+
+.projects {
+    grid-area: projects;
+}
+.todoItems {
+    grid-area: todoItems;
+}
+
+.list-group-item {
+    margin: 0;
+}
