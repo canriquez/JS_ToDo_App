@@ -1,14 +1,14 @@
-const todoItem = (title, description, dueDate, priority) => {
-    let id = 0
+export const todoItem = (title, description, dueDate, priority) => {
+    const id = 0;
     let itemStatus = 'open';
     const getTitle = () => title;
     const getDescription = () => description;
     const getDueDate = () => dueDate;
     const getPriority = () => priority;
-    const getStatus = () => status;
-    const changePriority = (prio) => { priority = prio };
-    const completeItem = () => { itemStatus = 'complete' };
-    const openItem = () => { itemStatus = 'open' };
+    const getStatus = () => itemStatus;
+    const changePriority = (prio) => { priority = prio; };
+    const completeItem = () => { itemStatus = 'complete'; };
+    const openItem = () => { itemStatus = 'open'; };
 
     return {
         getTitle,
@@ -22,4 +22,4 @@ const todoItem = (title, description, dueDate, priority) => {
     };
 };
 
-export const todoItem;
+export default todoItem;
