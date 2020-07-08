@@ -21,9 +21,9 @@
     <section class="projectBook">
         <div id="projects" class="projects">
             <div class="input-group mb-3">
-                <input type="text" class="form-control" placeholder="Project's name">
+                <input id="projectName" type="text" class="form-control" placeholder="Project's name">
                 <div class="input-group-append">
-                    <button class="btn btn-success" type="button"><i class="glyphicon glyphicon-plus"></i> Add Project</button>
+                    <button id="btnAddProject" class="btn btn-success" type="button"><i class="glyphicon glyphicon-plus"></i> Add Project</button>
                 </div>
             </div>
             <div id="projectItems"></div>
@@ -55,7 +55,7 @@
                     </select>
                     </div>
                 </div>
-                <button class="btn btn-success align-self-end">
+                <button id="btnAddItem" class="btn btn-success align-self-end">
                     Add ToDo  
                     <i class="glyphicon glyphicon-plus"></i>
                 </button>

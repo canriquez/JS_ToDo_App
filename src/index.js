@@ -5,9 +5,12 @@ import { differenceInCalendarDays } from 'date-fns';
 
 import { todoItem } from './components/todoitem';
 import { todoBook } from './components/todobook';
+import { DisplayController } from './components/displaycontroller';
 
 // navbar logo
 import logo from './icons/logo.svg';
+
+
 
 require('webpack-icons-installer');
 
@@ -119,10 +122,7 @@ function renderItems(project) {
     document.getElementById('later').innerHTML = htmlTagLater;
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-    renderProjects();
-    renderItems(0);
-
+function addListenersToProjects() {
     //add listener to projects
     const project_items = document.getElementsByClassName('project');
     const showListProjects = function showListProjects() {
@@ -132,4 +132,22 @@ document.addEventListener('DOMContentLoaded', () => {
     for (let i = 0; i < project_items.length; i += 1) {
         project_items[i].addEventListener('click', showListProjects, false);
     }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    renderProjects();
+    renderItems(0);
+    addListenersToProjects();
+
+    //add listener to buttons
+    document.getElementById('btnAddProject').addEventListener('click', () => {
+        let p = DisplayController.prepareProjectObject();
+        p = book.addProject(p.getName());
+        renderProjects();
+        renderItems(p.getProjectId());
+        addListenersToProjects();
+    });
+    document.getElementById('btnAddItem').addEventListener('click', () => {
+
+    });
 });

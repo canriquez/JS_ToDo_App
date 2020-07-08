@@ -9,7 +9,6 @@
     padding: 20px;
     margin: 0 auto;
     height: 80vh;
-    overflow: hidden;
     display: grid;
     grid-gap: 5px;
     grid-template-columns: 25% 75%;
