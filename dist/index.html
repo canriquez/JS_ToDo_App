@@ -29,10 +29,37 @@
             <div id="projectItems"></div>
         </div>
         <div id="todoItems" class="todoItems d-flex flex-column">
-            <button class="btn btn-success align-self-end">
-                Add ToDo  
-                <i class="glyphicon glyphicon-plus"></i>
-            </button>
+            <form>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="inputTitle">Title</label>
+                        <input type="text" class="form-control" id="inputTitle" placeholder="Title">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputDescription">Description</label>
+                    <input type="text" class="form-control" id="inputDescription" placeholder="Brief description">
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="inputDate">Due date</label>
+                        <input type="date" class="form-control" id="inputDate">
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="inputPriority">Priority</label>
+                        <select id="inputPriority" class="form-control">
+                      <option value="0" selected>Choose...</option>
+                      <option value="1">High</option>
+                      <option value="2">Medium</option>
+                      <option value="3">Low</option>
+                    </select>
+                    </div>
+                </div>
+                <button class="btn btn-success align-self-end">
+                    Add ToDo  
+                    <i class="glyphicon glyphicon-plus"></i>
+                </button>
+            </form>
             <div class="items-container mt-3">
                 <div class="alert alert-secondary" role="alert">
                     <h2>Today</h2>
