@@ -20,24 +20,33 @@
     </header>
     <section class="projectBook">
         <div id="projects" class="projects">
+            <div class="input-group mb-3">
+                <input type="text" class="form-control" placeholder="Project's name">
+                <div class="input-group-append">
+                    <button class="btn btn-success" type="button"><i class="glyphicon glyphicon-plus"></i> Add Project</button>
+                </div>
+            </div>
+            <div id="projectItems"></div>
         </div>
-        <div id="todoItems" class="todoItems">
-
-            <div class="alert alert-secondary" role="alert">
-                <h2>Today</h2>
+        <div id="todoItems" class="todoItems d-flex flex-column">
+            <button class="btn btn-success align-self-end">
+                Add ToDo  
+                <i class="glyphicon glyphicon-plus"></i>
+            </button>
+            <div class="items-container mt-3">
+                <div class="alert alert-secondary" role="alert">
+                    <h2>Today</h2>
+                </div>
+                <div id="today"></div>
+                <div class="alert alert-secondary" role="alert">
+                    <h2>Tomorrow</h2>
+                </div>
+                <div id="tomorrow"></div>
+                <div class="alert alert-secondary" role="alert">
+                    <h3>Other</h3>
+                </div>
+                <div id="later"></div>
             </div>
-            <div id="today"></div>
-
-            <div class="alert alert-secondary" role="alert">
-                <h2>Tomorrow</h2>
-            </div>
-            <div id="tomorrow"></div>
-
-            <div class="alert alert-secondary" role="alert">
-                <h3>Other</h3>
-            </div>
-            <div id="later"></div>
-
     </section>
     <script src="main.js"></script>
 

@@ -11,7 +11,7 @@
     height: 80vh;
     overflow: hidden;
     display: grid;
-    grid-gap: 0;
+    grid-gap: 5px;
     grid-template-columns: 25% 75%;
     grid-template-areas: "projects todoItems";
 }
@@ -19,6 +19,7 @@
 .projects {
     grid-area: projects;
 }
+
 .todoItems {
     grid-area: todoItems;
 }
@@ -27,7 +28,9 @@
     margin: 0;
 }
 
+
 /* ================= Todo Item Cards =============== */
+
 .projectItem {
     margin: 12px 0;
     box-shadow: 0 50px 100px rgba(50, 50, 93, 0.05), 0 15px 35px rgba(50, 50, 93, 0.1), 0 5px 15px rgba(0, 0, 0, 0.1);
@@ -60,6 +63,7 @@
 .action-icons span {
     font-size: 1.5rem;
 }
+
 .action-icons span:hover {
     color: red;
 }
