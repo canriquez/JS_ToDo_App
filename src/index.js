@@ -38,27 +38,27 @@ console.log(`id :${book.getProjects()[0].getProjectId()}`);
 // / Render projects
 
 function renderProjects() {
-  let htmlTag = '';
-  for (let i = 0; i < book.getProjects().length; i += 1) {
-    htmlTag += `<div id="p${i}"><p class="project">${book.getProjects()[i].getName()}</p></div>`;
-  }
-  document.getElementById('projects').innerHTML = htmlTag;
+    let htmlTag = '';
+    for (let i = 0; i < book.getProjects().length; i += 1) {
+        htmlTag += `<div id="p${i}"><p class="project">${book.getProjects()[i].getName()}</p></div>`;
+    }
+    document.getElementById('projects').innerHTML = htmlTag;
 }
 
 function renderItems(project) {
-  let htmlTagToday = '';
-  let htmlTagTomorrow = '';
-  let htmlTagLater = '';
+    let htmlTagToday = '';
+    let htmlTagTomorrow = '';
+    let htmlTagLater = '';
 
-  let i = 0;
-  for (const item of book.getSingleProject(project).getProjectItems()) {
-    const date = Date.parse(item.getDueDate());
-    const todayDate = new Date();
+    let i = 0;
+    for (const item of book.getSingleProject(project).getProjectItems()) {
+        const date = Date.parse(item.getDueDate());
+        const todayDate = new Date();
 
-    const result = differenceInCalendarDays(date, todayDate);
+        const result = differenceInCalendarDays(date, todayDate);
 
-    if (result == 0) {
-      htmlTagToday += `<div class="card projectItem" id="item${i}">
+        if (result === 0) {
+            htmlTagToday += `<div class="card projectItem" id="item${i}">
                 <div class="card-body d-flex flex-row justify-content-between align-items-center">
                     <div class="item-info">
                         <h3>${item.getTitle()}</h3>
@@ -74,8 +74,8 @@ function renderItems(project) {
                     </div>
                 </div>
             </div>`;
-    } else if (result == 1) {
-      htmlTagTomorrow += `<div class="card projectItem" id="item${i}">
+        } else if (result === 1) {
+            htmlTagTomorrow += `<div class="card projectItem" id="item${i}">
             <div class="card-body d-flex flex-row justify-content-between align-items-center">
                 <div class="item-info">
                     <h3>${item.getTitle()}</h3>
@@ -91,8 +91,8 @@ function renderItems(project) {
                 </div>
             </div>
         </div>`;
-    } else {
-      htmlTagLater += `<div class="card projectItem" id="item${i}">
+        } else {
+            htmlTagLater += `<div class="card projectItem" id="item${i}">
             <div class="card-body d-flex flex-row justify-content-between align-items-center">
                 <div class="item-info">
                     <h3>${item.getTitle()}</h3>
@@ -108,16 +108,16 @@ function renderItems(project) {
                 </div>
             </div>
         </div>`;
+        }
+        i += 1;
     }
-    i += 1;
-  }
 
-  document.getElementById('today').innerHTML = htmlTagToday;
-  document.getElementById('tomorrow').innerHTML = htmlTagTomorrow;
-  document.getElementById('later').innerHTML = htmlTagLater;
+    document.getElementById('today').innerHTML = htmlTagToday;
+    document.getElementById('tomorrow').innerHTML = htmlTagTomorrow;
+    document.getElementById('later').innerHTML = htmlTagLater;
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-  renderProjects();
-  renderItems(1);
+    renderProjects();
+    renderItems(1);
 });
