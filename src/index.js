@@ -25,9 +25,9 @@ book.initialize(); // Creates a new project "default" with id=0;
 // const p1 = todoProject('TODO APP');
 const p1 = book.addProject('TODO APP'); // Creat a project with ID '1'
 
-const item1 = todoItem('Define Data model', 'Create excel with data model and methods', '2020-07-07', 'high');
-const item2 = todoItem('Create basic Factories', 'Create factory files and methods', '2020-07-08', 'high');
-const item3 = todoItem('Create screens wireframes', 'Create initial screen designs', '2020-07-09', 'high');
+const item1 = todoItem('Define Data model', 'Create excel with data model and methods', '2020-07-08', 'high');
+const item2 = todoItem('Create basic Factories', 'Create factory files and methods', '2020-07-09', 'high');
+const item3 = todoItem('Create screens wireframes', 'Create initial screen designs', '2020-07-19', 'high');
 
 p1.addItem(item1); // Item added into the project's array with the project Id Set.
 p1.addItem(item2); // Item added into the project's array with the project Id Set.
@@ -43,8 +43,15 @@ console.log(`id :${book.getProjects()[0].getProjectId()}`);
 function renderProjects() {
     let htmlTag = '';
     for (let i = 0; i < book.getProjects().length; i += 1) {
-        htmlTag += `<div class="card projectItem" id="p${i}">
-        <p class="project card-body" data-index="${i}">${book.getProjects()[i].getName()}</p>
+        htmlTag += `<div class="card projectItem" data-index="${i}" id="p${i}">
+        
+        <div class="card-body d-flex flex-row justify-content-between align-items-center">
+            <p class="project m-0">${book.getProjects()[i].getName()}</p>
+            <div class="action-icons d-flex flex-row justify-content-around align-items-center">
+                <span id="edit${i}" class="glyphicon glyphicon-pencil"></span>
+                <span id="remove${i}" class="glyphicon glyphicon-remove"></span>
+            </div>
+        </div>
         </div>`;
     }
     document.getElementById('projectItems').innerHTML = htmlTag;
@@ -124,14 +131,17 @@ function renderItems(project) {
 
 function addListenersToProjects() {
     //add listener to projects
-    const project_items = document.getElementsByClassName('project');
+    const project_items = document.getElementsByClassName('projectItem');
     const showListProjects = function showListProjects() {
         console.log(this.getAttribute('data-index'));
         renderItems(this.getAttribute('data-index'));
+        book.setDomSelectedProject(this.getAttribute('data-index'));
+        DisplayController.selectDomProject(this.getAttribute('data-index'));
     };
     for (let i = 0; i < project_items.length; i += 1) {
         project_items[i].addEventListener('click', showListProjects, false);
     }
+
 }
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -142,12 +152,22 @@ document.addEventListener('DOMContentLoaded', () => {
     //add listener to buttons
     document.getElementById('btnAddProject').addEventListener('click', () => {
         let p = DisplayController.prepareProjectObject();
-        p = book.addProject(p.getName());
-        renderProjects();
-        renderItems(p.getProjectId());
-        addListenersToProjects();
+        if (p.getName() === '' || book.projectExists(p)) {
+            console.log('project name empty');
+            return;
+        } else {
+            p = book.addProject(p.getName());
+            book.setDomSelectedProject(p.getProjectId());
+            renderProjects();
+            renderItems(p.getProjectId());
+            addListenersToProjects();
+            DisplayController.selectDomProject(p.getProjectId());
+        };
     });
+
     document.getElementById('btnAddItem').addEventListener('click', () => {
+        let domItem = DisplayController.prepareItemObject();
+        book.getSingleProject()[book.getDomSelectedProject()].addItem(domItem);
 
     });
 });

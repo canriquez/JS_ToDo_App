@@ -27,7 +27,9 @@
     margin: 0;
 }
 
-
+.selectedProject {
+    background-color: yellow;
+}
 /* ================= Todo Item Cards =============== */
 
 .projectItem {
@@ -38,6 +40,14 @@
 .card-body {
     position: relative;
     padding: 10px;
+}
+
+.projectItem .action-icons {
+    width: 30%;
+}
+
+.projectItem .action-icons span {
+    font-size: 0.9rem;
 }
 
 .due-box {
@@ -63,6 +73,7 @@
     font-size: 1.5rem;
 }
 
-.action-icons span:hover {
+.action-icons span:hover,
+.projectItem .action-icons span:hover {
     color: red;
 }

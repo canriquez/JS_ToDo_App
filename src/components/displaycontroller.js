@@ -6,6 +6,7 @@ export const DisplayController = (() => {
     const prepareProjectObject = () => {
         let name = document.getElementById('projectName').value;
         let project = todoProject(name, 0);
+        document.getElementById('projectName').value = '';
         return project;
     };
 
@@ -18,9 +19,19 @@ export const DisplayController = (() => {
         return item;
     };
 
+    const selectDomProject = (project) => {
+        const project_items = document.getElementsByClassName('projectItem');
+        for (let i = 0; i < project_items.length; i += 1) {
+            project_items[i].classList.remove('selectedProject');;
+        }
+        const domProject = document.getElementById('p' + project);
+        domProject.classList.add('selectedProject');
+    }
+
     return {
         prepareProjectObject,
-        prepareItemObject
+        prepareItemObject,
+        selectDomProject,
     }
 
 })();
