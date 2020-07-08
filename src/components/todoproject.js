@@ -1,8 +1,13 @@
-export const todoProject = (name) => {
+export const todoProject = (name, projectid) => {
   let projectStatus = 'open';
+  const projectId = projectid;
+  const projectName = name;
   const projectItems = [];
-  const getName = () => name;
+
+  const getName = () => projectName;
+  const getProjectId = () => projectId;
   const getProjectItems = () => projectItems;
+  const getProjectStatus = () => projectStatus;
   const closeProject = () => {
     if (projectItems.length === 0) {
       projectStatus = 'close';
@@ -10,8 +15,14 @@ export const todoProject = (name) => {
     }
     return false;
   };
+
   const changeName = (newName) => { name = newName; };
-  const addItem = (item) => { projectItems.push(item); };
+
+  const addItem = (item) => {
+    item.setProject(projectId);
+    projectItems.push(item);
+  };
+
   const removeItem = (itemId) => {
     if (itemId <= projectItems.length - 1) {
       projectItems.splice(itemId, 1);
@@ -21,7 +32,9 @@ export const todoProject = (name) => {
   };
   return {
     getName,
+    getProjectId,
     getProjectItems,
+    getProjectStatus,
     closeProject,
     changeName,
     addItem,

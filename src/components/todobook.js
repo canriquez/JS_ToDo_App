@@ -1,21 +1,36 @@
-import todoProject from './todoproject';
+import { todoProject } from './todoproject';
 
 export const todoBook = (username) => {
-  const projects = [];
+  let projects = [];
+  let projectId = -1;
   const getUser = () => username;
   const changeUser = (newUsername) => {
     username = newUsername;
   };
-  const initialize = () => {
-    const project = todoProject('default');
-    addProject(project);
+
+  const newProjectId = () => {
+    projectId += 1;
+    return projectId;
   };
+
+  const addProject = (name) => {
+    newProjectId();
+    const project = todoProject(name, projectId);
+    projects.push(project);
+    return project;
+  };
+
+  const initialize = () => {
+    addProject('default');
+  };
+
   const getProjects = () => projects;
   const getSingleProject = (index) => projects[index];
-  const addProject = (project) => { projects.push(project); };
+
+
   const removeProject = (projectId) => {
-    if (projectId <= project.length - 1) {
-      project.splice(projectId, 1);
+    if (projectId <= projects.length - 1) {
+      projects.splice(projectId, 1);
       return true;
     }
     return false;
