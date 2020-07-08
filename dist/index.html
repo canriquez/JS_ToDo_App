@@ -29,7 +29,7 @@
             <div id="projectItems"></div>
         </div>
         <div id="todoItems" class="todoItems d-flex flex-column">
-            <form>
+            <form id="addProject">
                 <div class="form-row">
                     <div class="form-group col-md-6">
                         <label for="inputTitle">Title</label>
@@ -49,13 +49,13 @@
                         <label for="inputPriority">Priority</label>
                         <select id="inputPriority" class="form-control">
                       <option value="0" selected>Choose...</option>
-                      <option value="1">High</option>
-                      <option value="2">Medium</option>
-                      <option value="3">Low</option>
+                      <option value="high">High</option>
+                      <option value="medium">Medium</option>
+                      <option value="low">Low</option>
                     </select>
                     </div>
                 </div>
-                <button id="btnAddItem" class="btn btn-success align-self-end">
+                <button type="button" id="btnAddItem" class="btn btn-success align-self-end">
                     Add ToDo  
                     <i class="glyphicon glyphicon-plus"></i>
                 </button>

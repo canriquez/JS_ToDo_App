@@ -1,7 +1,7 @@
 import 'bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './style.css';
-import { differenceInCalendarDays } from 'date-fns';
+import { differenceInCalendarDays, format } from 'date-fns';
 
 import { todoItem } from './components/todoitem';
 import { todoBook } from './components/todobook';
@@ -57,6 +57,17 @@ function renderProjects() {
     document.getElementById('projectItems').innerHTML = htmlTag;
 }
 
+function prioStyle(prio) {
+    console.log('prios :' + prio)
+    if (prio === 'high') {
+        return 'badge badge-pill badge-danger';
+    } else if (prio === 'medium') {
+        return 'badge badge-pill badge-warning';
+    } else {
+        return 'badge badge-pill badge-primary';
+    };
+}
+
 function renderItems(project) {
     let htmlTagToday = '';
     let htmlTagTomorrow = '';
@@ -66,9 +77,10 @@ function renderItems(project) {
     book.getSingleProject(project).getProjectItems().forEach(item => {
         const date = Date.parse(item.getDueDate());
         const todayDate = new Date();
+        console.log('today is: ' + format(todayDate, "dd/MM/yyy") + " - Item date is :" + format(date, "dd/MM/yyy"));
 
         const result = differenceInCalendarDays(date, todayDate);
-
+        console.log("item :" + item.getTitle() + " due day in: " + result + " days.");
         if (result === 0) {
             htmlTagToday += `<div class="card projectItem" id="item${i}">
                 <div class="card-body d-flex flex-row justify-content-between align-items-center">
@@ -78,8 +90,11 @@ function renderItems(project) {
                     </div>
                     <div class="due-box  d-flex flex-row justify-content-around align-items-center">
                         <h5 class="m-0">Due date:</h5>
-                        <p class="m-0">${item.getDueDate()}</p>
+                        <p class="m-0">${format(date, "dd/MM/yyy")}</p>
                     </div>
+                    <div class="priority ${prioStyle(item.getPriority())}">
+                    <p class="m-0">${item.getPriority()}</p>
+                </div>
                     <div class="action-icons d-flex flex-row justify-content-around align-items-center">
                         <span id="edit${i}" class="glyphicon glyphicon-pencil"></span>
                         <span id="remove${i}" class="glyphicon glyphicon-remove"></span>
@@ -95,7 +110,10 @@ function renderItems(project) {
                 </div>
                 <div class="due-box  d-flex flex-row justify-content-around align-items-center">
                     <h5 class="m-0">Due date:</h5>
-                    <p class="m-0">${item.getDueDate()}</p>
+                    <p class="m-0">${format(date, "dd/MM/yyy")}</p>
+                </div>
+                <div class="priority ${prioStyle(item.getPriority())}">
+                    <p class="m-0">${item.getPriority()}</p>
                 </div>
                 <div class="action-icons d-flex flex-row justify-content-around align-items-center">
                     <span id="edit${i}" class="glyphicon glyphicon-pencil"></span>
@@ -112,7 +130,13 @@ function renderItems(project) {
                 </div>
                 <div class="due-box  d-flex flex-row justify-content-around align-items-center">
                     <h5 class="m-0">Due date:</h5>
-                    <p class="m-0">${item.getDueDate()}</p>
+                    <p class="m-0">${format(date, "dd/MM/yyy")}</p>
+                </div>
+                <div class="item-status">
+                    <p class="m-0">${(result < 0 ? " Overdue" : " Upcoming")}</p>
+                </div>
+                <div class="priority ${prioStyle(item.getPriority())}">
+                    <p class="m-0">${item.getPriority()}</p>
                 </div>
                 <div class="action-icons d-flex flex-row justify-content-around align-items-center">
                     <span id="edit${i}" class="glyphicon glyphicon-pencil"></span>
@@ -145,8 +169,10 @@ function addListenersToProjects() {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
+    book.setDomSelectedProject(0); //sets project default as selected;
     renderProjects();
-    renderItems(0);
+    renderItems(book.getDomSelectedProject());
+    DisplayController.selectDomProject(book.getDomSelectedProject())
     addListenersToProjects();
 
     //add listener to buttons
@@ -167,7 +193,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.getElementById('btnAddItem').addEventListener('click', () => {
         let domItem = DisplayController.prepareItemObject();
-        book.getSingleProject()[book.getDomSelectedProject()].addItem(domItem);
+
+        if (book.getDomSelectedProject() === -1) {
+            console.log('no project selected');
+            return;
+        } else {
+            book.getSingleProject(book.getDomSelectedProject()).addItem(domItem);
+            renderItems(book.getDomSelectedProject());
+            addListenersToProjects();
+        };
 
     });
 });
+

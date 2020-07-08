@@ -11,11 +11,12 @@ export const DisplayController = (() => {
     };
 
     const prepareItemObject = () => {
-        let title = document.getElementById('projectName').value;
-        let description = document.getElementById('projectName').value;
-        let duedate = document.getElementById('projectName').value;
-        let priority = document.getElementById('projectName').value;
+        let title = document.getElementById('inputTitle').value;
+        let description = document.getElementById('inputDescription').value;
+        let duedate = document.getElementById('inputDate').value;
+        let priority = document.getElementById('inputPriority').value;
         let item = todoItem(title, description, duedate, priority);
+        console.log(item);
         return item;
     };
 
