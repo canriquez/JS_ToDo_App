@@ -34,7 +34,19 @@
 }
 
 .card-body {
+    position: relative;
     padding: 10px;
+}
+
+.due-box {
+    position: absolute;
+    width: 30%;
+    top: 0;
+    right: 0;
+}
+
+.due-box p {
+    margin: 0;
 }
 
 .card-body:hover {

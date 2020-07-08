@@ -6,12 +6,10 @@ import { differenceInCalendarDays, format } from 'date-fns';
 import { todoItem } from './components/todoitem';
 import { todoProject } from './components/todoproject';
 import todoBook from './components/todobook';
-
+require('webpack-icons-installer');
 
 // navbar logo
 import logo from './icons/logo.svg';
-
-require('webpack-icons-installer');
 
 const logoIcon = new Image();
 logoIcon.src = logo;
@@ -62,6 +60,10 @@ function renderItems(project) {
                         <h3>${item.getTitle()}</h3>
                         <p>${item.getDescription()}</p>
                     </div>
+                    <div class="due-box  d-flex flex-row justify-content-around align-items-center">
+                        <h5 class="m-0">Due date:</h5>
+                        <p class="m-0">${item.getDueDate()}</p>
+                    </div>
                     <div class="action-icons d-flex flex-row justify-content-around align-items-center">
                         <span id="edit${i}" class="glyphicon glyphicon-pencil"></span>
                         <span id="remove${i}" class="glyphicon glyphicon-remove"></span>
@@ -75,6 +77,7 @@ function renderItems(project) {
                     <h3>${item.getTitle()}</h3>
                     <p>${item.getDescription()}</p>
                 </div>
+    
                 <div class="action-icons d-flex flex-row justify-content-around align-items-center">
                     <span id="edit${i}" class="glyphicon glyphicon-pencil"></span>
                     <span id="remove${i}" class="glyphicon glyphicon-remove"></span>
