@@ -31,7 +31,6 @@
     background-color: yellow;
 }
 
-
 /* ================= Todo Item Cards =============== */
 
 .projectItem {
@@ -75,6 +74,18 @@
     margin: 5px 5px;
     top: 0;
     left: 0;
+}
+
+.updateItemIcons {
+    position: absolute;
+    margin: 5px 5px;
+    top: 0;
+    left: 11%;
+    color: black;
+}
+
+.updateItemIcons span {
+    font-size: 1.2rem;
 }
 
 .due-box p {

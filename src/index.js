@@ -83,37 +83,45 @@ function renderItems(project) {
         console.log("item :" + item.getTitle() + " due day in: " + result + " days.");
         if (result === 0) {
             htmlTagToday += `<div class="card projectItem" id="item${i}">
-                <div class="card-body d-flex flex-row justify-content-between align-items-center pt-4">
-                    <div class="item-info">
-                    <h3 class="editItem" data-index=${i} >${item.getTitle()}</h3>
-                        <p>${item.getDescription()}</p>
-                    </div>
-                    <div class="due-box  d-flex flex-row justify-content-around align-items-center">
-                        <h5 class="m-0">Due date:</h5>
-                        <p class="m-0">${format(date, "dd/MM/yyy")}</p>
-                    </div>
-                    <div class="priority ${prioStyle(item.getPriority())}">
-                    <p class="m-0">${item.getPriority()}</p>
-                </div>
-                    <div class="action-icons d-flex flex-row justify-content-around align-items-center">
-                        <span id="edit${i}" class="glyphicon glyphicon-pencil action-edit-item" data-index=${i}></span>
-                        <span id="remove${i}" class="glyphicon glyphicon-remove action-remove-item" data-index=${i}></span>
-                    </div>
-                </div>
+            <div class="card-body d-flex flex-row justify-content-between align-items-center pt-4">
+            <div id="update-${i}"></div>
+            <div class="item-info">
+                <h3 class="editItem" data-index="${i}" data-element="title">${item.getTitle()}</h3>
+                <p class="editItem" data-index="${i}" data-element="description">${item.getDescription()}</p>
+            </div>
+            <div class="due-box  d-flex flex-row justify-content-around align-items-center">
+                <h5 class="m-0">Due date:</h5>
+                <p class="m-0 editItem" data-index="${i}" data-element="dueDate">${format(date, "dd/MM/yyy")}</p>
+            </div>
+            <div class="item-status">
+                <p class="m-0">${(result < 0 ? " Overdue" : " Upcoming")}</p>
+            </div>
+            <div class="priority ${prioStyle(item.getPriority())}">
+                <p class="m-0 editItem" data-index="${i}" data-element="priority">${item.getPriority()}</p>
+            </div>
+            <div class="action-icons d-flex flex-row justify-content-around align-items-center">
+                <span id="edit${i}" class="glyphicon glyphicon-pencil action-edit-item" data-index=${i}></span>
+                <span id="remove${i}" class="glyphicon glyphicon-remove action-remove-item" data-index=${i}></span>
+            </div>
+        </div>
             </div>`;
         } else if (result === 1) {
             htmlTagTomorrow += `<div class="card projectItem" id="item${i}">
             <div class="card-body d-flex flex-row justify-content-between align-items-center pt-4">
+                <div id="update-${i}"></div>
                 <div class="item-info">
-                <h3 class="editItem" data-index=${i} >${item.getTitle()}</h3>
-                    <p>${item.getDescription()}</p>
+                    <h3 class="editItem" data-index="${i}" data-element="title">${item.getTitle()}</h3>
+                    <p class="editItem" data-index="${i}" data-element="description">${item.getDescription()}</p>
                 </div>
                 <div class="due-box  d-flex flex-row justify-content-around align-items-center">
                     <h5 class="m-0">Due date:</h5>
-                    <p class="m-0">${format(date, "dd/MM/yyy")}</p>
+                    <p class="m-0 editItem" data-index="${i}" data-element="dueDate">${format(date, "dd/MM/yyy")}</p>
+                </div>
+                <div class="item-status">
+                    <p class="m-0">${(result < 0 ? " Overdue" : " Upcoming")}</p>
                 </div>
                 <div class="priority ${prioStyle(item.getPriority())}">
-                    <p class="m-0">${item.getPriority()}</p>
+                    <p class="m-0 editItem" data-index="${i}" data-element="priority">${item.getPriority()}</p>
                 </div>
                 <div class="action-icons d-flex flex-row justify-content-around align-items-center">
                     <span id="edit${i}" class="glyphicon glyphicon-pencil action-edit-item" data-index=${i}></span>
@@ -124,6 +132,7 @@ function renderItems(project) {
         } else {
             htmlTagLater += `<div class="card projectItem" id="item${i}">
             <div class="card-body d-flex flex-row justify-content-between align-items-center pt-4">
+                <div id="update-${i}"></div>
                 <div class="item-info">
                     <h3 class="editItem" data-index="${i}" data-element="title">${item.getTitle()}</h3>
                     <p class="editItem" data-index="${i}" data-element="description">${item.getDescription()}</p>
@@ -201,6 +210,9 @@ function addItemUpdateListeners() {
             case "dueDate":
                 currentProject.getProjectItems()[item].setDueDate(newValue);
                 break;
+            case "priority":
+                currentProject.getProjectItems()[item].setPriority(newValue);
+                break;
             default:
                 break;
         }
@@ -240,12 +252,14 @@ function addItemActionListeners() {
         let element = this.getAttribute('data-element');
         let itemObject = currentProject.getProjectItems()[item];
 
+        let updateIconsTag = document.getElementById('update-' + item);
+
         if (currentProject.getEditing()) { return }
 
         currentProject.setEditing();
 
         this.removeEventListener(event, editItem, true)
-            // render inputs on the element's Item to edit
+        // render inputs on the element's Item to edit
         this.classList.remove('editItem');
 
         console.log("editing: " + element);
@@ -271,6 +285,25 @@ function addItemActionListeners() {
                 <span id="cancell${item}" class="glyphicon glyphicon-remove action-cancel-item" data-index="${item}" data-element="${element}"></span>
                 </div>`;
                 break;
+            case "priority":
+                this.innerHTML = `<select id="inputEdit_${element}">
+                      <option value="low" 
+                      ${itemObject.getPriority() == "low" ? "selected" : ""} 
+                      >Low</option>
+                      <option value="medium"
+                      ${itemObject.getPriority() == "medium" ? "selected" : ""} 
+                      >Medium</option>
+                      <option value="high"
+                      ${itemObject.getPriority() == "high" ? "selected" : ""} 
+                      >High</option>                      
+                    </select>
+                `;
+                updateIconsTag.innerHTML = `
+                <div class = "updateItemIcons">
+                <span id="save${item}" class="glyphicon glyphicon-floppy-disk action-save-item" data-index="${item}" data-element="${element}"></span>
+                <span id="cancell${item}" class="glyphicon glyphicon-remove action-cancel-item" data-index="${item}" data-element="${element}"></span>
+                </div>
+                `
             default:
                 break;
         }
