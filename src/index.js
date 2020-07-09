@@ -83,7 +83,7 @@ function renderItems(project) {
         console.log("item :" + item.getTitle() + " due day in: " + result + " days.");
         if (result === 0) {
             htmlTagToday += `<div class="card projectItem" id="item${i}">
-                <div class="card-body d-flex flex-row justify-content-between align-items-center">
+                <div class="card-body d-flex flex-row justify-content-between align-items-center pt-4">
                     <div class="item-info">
                         <h3>${item.getTitle()}</h3>
                         <p>${item.getDescription()}</p>
@@ -103,7 +103,7 @@ function renderItems(project) {
             </div>`;
         } else if (result === 1) {
             htmlTagTomorrow += `<div class="card projectItem" id="item${i}">
-            <div class="card-body d-flex flex-row justify-content-between align-items-center">
+            <div class="card-body d-flex flex-row justify-content-between align-items-center pt-4">
                 <div class="item-info">
                     <h3>${item.getTitle()}</h3>
                     <p>${item.getDescription()}</p>
@@ -123,7 +123,7 @@ function renderItems(project) {
         </div>`;
         } else {
             htmlTagLater += `<div class="card projectItem" id="item${i}">
-            <div class="card-body d-flex flex-row justify-content-between align-items-center">
+            <div class="card-body d-flex flex-row justify-content-between align-items-center pt-4">
                 <div class="item-info">
                     <h3>${item.getTitle()}</h3>
                     <p>${item.getDescription()}</p>
@@ -205,4 +205,3 @@ document.addEventListener('DOMContentLoaded', () => {
 
     });
 });
-
