@@ -85,7 +85,7 @@ function renderItems(project) {
             htmlTagToday += `<div class="card projectItem" id="item${i}">
                 <div class="card-body d-flex flex-row justify-content-between align-items-center pt-4">
                     <div class="item-info">
-                    <h3 class="editItemTitle" data-index=${i} >${item.getTitle()}</h3>
+                    <h3 class="editItem" data-index=${i} >${item.getTitle()}</h3>
                         <p>${item.getDescription()}</p>
                     </div>
                     <div class="due-box  d-flex flex-row justify-content-around align-items-center">
@@ -105,7 +105,7 @@ function renderItems(project) {
             htmlTagTomorrow += `<div class="card projectItem" id="item${i}">
             <div class="card-body d-flex flex-row justify-content-between align-items-center pt-4">
                 <div class="item-info">
-                <h3 class="editItemTitle" data-index=${i} >${item.getTitle()}</h3>
+                <h3 class="editItem" data-index=${i} >${item.getTitle()}</h3>
                     <p>${item.getDescription()}</p>
                 </div>
                 <div class="due-box  d-flex flex-row justify-content-around align-items-center">
@@ -125,18 +125,18 @@ function renderItems(project) {
             htmlTagLater += `<div class="card projectItem" id="item${i}">
             <div class="card-body d-flex flex-row justify-content-between align-items-center pt-4">
                 <div class="item-info">
-                    <h3 class="editItemTitle" data-index=${i} >${item.getTitle()}</h3>
-                    <p>${item.getDescription()}</p>
+                    <h3 class="editItem" data-index="${i}" data-element="title">${item.getTitle()}</h3>
+                    <p class="editItem" data-index="${i}" data-element="description">${item.getDescription()}</p>
                 </div>
                 <div class="due-box  d-flex flex-row justify-content-around align-items-center">
                     <h5 class="m-0">Due date:</h5>
-                    <p class="m-0">${format(date, "dd/MM/yyy")}</p>
+                    <p class="m-0 editItem" data-index="${i}" data-element="dueDate">${format(date, "dd/MM/yyy")}</p>
                 </div>
                 <div class="item-status">
                     <p class="m-0">${(result < 0 ? " Overdue" : " Upcoming")}</p>
                 </div>
                 <div class="priority ${prioStyle(item.getPriority())}">
-                    <p class="m-0">${item.getPriority()}</p>
+                    <p class="m-0 editItem" data-index="${i}" data-element="priority">${item.getPriority()}</p>
                 </div>
                 <div class="action-icons d-flex flex-row justify-content-around align-items-center">
                     <span id="edit${i}" class="glyphicon glyphicon-pencil action-edit-item" data-index=${i}></span>
@@ -187,8 +187,24 @@ function addItemUpdateListeners() {
     const saveItem = function saveItem(event) {
         let currentProject = book.getSingleProject(book.getDomSelectedProject());
         let item = this.getAttribute('data-index');
-        let newValue = DisplayController.readItemUpdateValue('inputEditTitle');
-        currentProject.getProjectItems()[item].setTitle(newValue);
+        let element = this.getAttribute('data-element');
+
+        let newValue = DisplayController.readItemUpdateValue("inputEdit_" + element);
+        console.log("saving: " + element);
+        switch (element) {
+            case "title":
+                currentProject.getProjectItems()[item].setTitle(newValue);
+                break;
+            case "description":
+                currentProject.getProjectItems()[item].setDescription(newValue);
+                break;
+            case "dueDate":
+                currentProject.getProjectItems()[item].setDueDate(newValue);
+                break;
+            default:
+                break;
+        }
+
         prepareItems();
         console.log('now trying to clear editing flag')
         currentProject.clearEditing();
@@ -207,7 +223,7 @@ function addItemUpdateListeners() {
 
 function addItemActionListeners() {
     const items_remove_action = document.getElementsByClassName('action-remove-item');
-    const items_titleEdit_action = document.getElementsByClassName('editItemTitle');
+    const items_titleEdit_action = document.getElementsByClassName('editItem');
 
     const removeItem = function removeItem() {
         console.log('click on removeItem');
@@ -218,30 +234,47 @@ function addItemActionListeners() {
         prepareItems();
     };
 
-    const editTitleItem = function editTitleItem(event) {
+    const editItem = function editItem(event) {
         let currentProject = book.getSingleProject(book.getDomSelectedProject());
         let item = this.getAttribute('data-index');
-        console.log('catch editing title click');
-        console.log("editing item? : " + currentProject.getEditing());
+        let element = this.getAttribute('data-element');
+        let itemObject = currentProject.getProjectItems()[item];
 
         if (currentProject.getEditing()) { return }
 
         currentProject.setEditing();
 
-        console.log('click on editItem - Project : ' + book.getDomSelectedProject() + ", Item :" + this.getAttribute('data-index'));
-        console.log(this.getAttribute('data-index'));
-        this.removeEventListener(event, editTitleItem, true)
+        this.removeEventListener(event, editItem, true)
             // render inputs on the element's Item to edit
-        this.classList.remove('editItemTitle');
-        this.innerHTML = `<input type="text" value="
-        ${this.innerHTML}
-        "
-        id="inputEditTitle"
-        >
-        <div>
-        <span id="save${item}" class="glyphicon glyphicon-floppy-disk action-save-item" data-index=${item}></span>
-        <span id="cancell${item}" class="glyphicon glyphicon-remove action-cancel-item" data-index=${item}></span>
-        </div>`;
+        this.classList.remove('editItem');
+
+        console.log("editing: " + element);
+
+        switch (element) {
+            case "title":
+            case "description":
+                this.innerHTML = `<input type="text" value="${this.innerHTML}"
+                id="inputEdit_${element}"
+                >
+                <div>
+                <span id="save${item}" class="glyphicon glyphicon-floppy-disk action-save-item" data-index="${item}" data-element="${element}"></span>
+                <span id="cancell${item}" class="glyphicon glyphicon-remove action-cancel-item" data-index="${item}" data-element="${element}"></span>
+                </div>`;
+                break;
+            case "dueDate":
+                this.innerHTML = `<input type="date" value="${itemObject.getDueDate().trim()}"
+                id="inputEdit_${element}"
+                placeholder="dd-mm-yyyy"
+                >
+                <div>
+                <span id="save${item}" class="glyphicon glyphicon-floppy-disk action-save-item" data-index="${item}" data-element="${element}"></span>
+                <span id="cancell${item}" class="glyphicon glyphicon-remove action-cancel-item" data-index="${item}" data-element="${element}"></span>
+                </div>`;
+                break;
+            default:
+                break;
+        }
+
         addItemUpdateListeners();
         addItemCancelListers();
 
@@ -255,7 +288,7 @@ function addItemActionListeners() {
         items_remove_action[i].addEventListener('click', removeItem, false);
     }
     for (let i = 0; i < items_titleEdit_action.length; i += 1) {
-        items_titleEdit_action[i].addEventListener('click', editTitleItem, false);
+        items_titleEdit_action[i].addEventListener('click', editItem, false);
     }
 
 }

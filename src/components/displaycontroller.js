@@ -24,6 +24,13 @@ export const DisplayController = (() => {
 
     const readItemUpdateValue = (itemProperty) => {
         let property = document.getElementById(itemProperty).value;
+        console.log("reading value: " + itemProperty);
+        if (itemProperty === "inputEdit_dueDate") {
+            console.log("parsing date");
+            let parts = property.split("-");
+            console.log(parts);
+            property = new Date(parts[0] + '/' + parts[1] + '/' + parts[2]);
+        }
         return property;
     }
 
