@@ -3,7 +3,11 @@ export const todoProject = (name, projectid) => {
     const projectId = projectid;
     const projectName = name;
     const projectItems = [];
+    let editing = false;
 
+    const setEditing = () => { editing = true; };
+    const getEditing = () => editing;
+    const clearEditing = () => { editing = false; };
     const getName = () => projectName;
     const getProjectId = () => projectId;
     const getProjectItems = () => projectItems;
@@ -45,7 +49,9 @@ export const todoProject = (name, projectid) => {
         addItem,
         itemExists,
         removeItem,
-
+        setEditing,
+        getEditing,
+        clearEditing,
     };
 };
 

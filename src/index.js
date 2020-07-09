@@ -85,7 +85,7 @@ function renderItems(project) {
             htmlTagToday += `<div class="card projectItem" id="item${i}">
                 <div class="card-body d-flex flex-row justify-content-between align-items-center pt-4">
                     <div class="item-info">
-                        <h3>${item.getTitle()}</h3>
+                    <h3 class="editItemTitle" data-index=${i} >${item.getTitle()}</h3>
                         <p>${item.getDescription()}</p>
                     </div>
                     <div class="due-box  d-flex flex-row justify-content-around align-items-center">
@@ -105,7 +105,7 @@ function renderItems(project) {
             htmlTagTomorrow += `<div class="card projectItem" id="item${i}">
             <div class="card-body d-flex flex-row justify-content-between align-items-center pt-4">
                 <div class="item-info">
-                    <h3>${item.getTitle()}</h3>
+                <h3 class="editItemTitle" data-index=${i} >${item.getTitle()}</h3>
                     <p>${item.getDescription()}</p>
                 </div>
                 <div class="due-box  d-flex flex-row justify-content-around align-items-center">
@@ -167,6 +167,19 @@ function addListenersToProjects() {
     }
 }
 
+function addItemCancelListers() {
+    const items_cancel_action = document.getElementsByClassName('action-cancel-item');
+    const cancelItem = function cancelItem(event) {
+        let currentProject = book.getSingleProject(book.getDomSelectedProject());
+        currentProject.clearEditing();
+        event.stopPropagation();
+        prepareItems();
+    }
+    for (let i = 0; i < items_cancel_action.length; i += 1) {
+        items_cancel_action[i].addEventListener('click', cancelItem, false);
+    }
+}
+
 
 function addItemUpdateListeners() {
     const items_update_action = document.getElementsByClassName('action-save-item');
@@ -178,8 +191,8 @@ function addItemUpdateListeners() {
         currentProject.getProjectItems()[item].setTitle(newValue);
         prepareItems();
         console.log('now trying to clear editing flag')
-        currentProject.getProjectItems()[item].clearEditing();
-        console.log("Just finished editing. editing item? : " + currentProject.getProjectItems()[item].getEditing());
+        currentProject.clearEditing();
+        console.log("Just finished editing. editing item? : " + currentProject.getEditing());
         event.stopPropagation();
         console.log("...and event propagation halted after editing Title " + this.getAttribute('data-index'));
     }
@@ -209,16 +222,16 @@ function addItemActionListeners() {
         let currentProject = book.getSingleProject(book.getDomSelectedProject());
         let item = this.getAttribute('data-index');
         console.log('catch editing title click');
-        console.log("editing item? : " + currentProject.getProjectItems()[item].getEditing());
+        console.log("editing item? : " + currentProject.getEditing());
 
-        if (currentProject.getProjectItems()[item].getEditing()) { return }
+        if (currentProject.getEditing()) { return }
 
-        currentProject.getProjectItems()[item].setEditing();
+        currentProject.setEditing();
 
         console.log('click on editItem - Project : ' + book.getDomSelectedProject() + ", Item :" + this.getAttribute('data-index'));
         console.log(this.getAttribute('data-index'));
         this.removeEventListener(event, editTitleItem, true)
-        // render inputs on the element's Item to edit
+            // render inputs on the element's Item to edit
         this.classList.remove('editItemTitle');
         this.innerHTML = `<input type="text" value="
         ${this.innerHTML}
@@ -227,9 +240,10 @@ function addItemActionListeners() {
         >
         <div>
         <span id="save${item}" class="glyphicon glyphicon-floppy-disk action-save-item" data-index=${item}></span>
-        <span id="cancell${item}" class="glyphicon glyphicon-remove action-remove-item" data-index=${item}></span>
+        <span id="cancell${item}" class="glyphicon glyphicon-remove action-cancel-item" data-index=${item}></span>
         </div>`;
         addItemUpdateListeners();
+        addItemCancelListers();
 
         // render accept icon to add changes
         // read new form imputs
@@ -270,6 +284,8 @@ function prepareProjects() {
 }
 
 function prepareItems() {
+    let currentProject = book.getSingleProject(book.getDomSelectedProject());
+    currentProject.clearEditing();
     renderItems(book.getDomSelectedProject());
     addItemActionListeners();
 }
