@@ -157,6 +157,7 @@ function addListenersToProjects() {
     //add listener to projects
     const project_items = document.getElementsByClassName('projectItem');
     const showListProjects = function showListProjects() {
+        console.log("clicl on select project : " + this.getAttribute('data-index'));
         book.setDomSelectedProject(this.getAttribute('data-index'));
         DisplayController.selectDomProject(this.getAttribute('data-index'));
         prepareItems();
@@ -171,6 +172,7 @@ function addItemActionListeners() {
     const removeItem = function removeItem() {
         console.log('remoteItem');
         console.log(this.getAttribute('data-index'));
+        console.log("click Item remove - project : " + book.getDomSelectedProject() + " - item :" + this.getAttribute('data-index'));
         let currentProject = book.getSingleProject(book.getDomSelectedProject());
         currentProject.removeItem(this.getAttribute('data-index'));
         prepareItems();
@@ -182,10 +184,13 @@ function addItemActionListeners() {
 
 function addProjectActionListeners() {
     const projects = document.getElementsByClassName('action-remove-project');
-    const removeProject = function removeProject() {
+    const removeProject = function removeProject(event) {
+        console.log("click project remove - project : " + this.getAttribute('data-index'))
         book.removeProject(this.getAttribute('data-index'));
         book.setDomSelectedProject(0);
         prepareProjects();
+        event.stopPropagation();
+        console.log("...and event propagation halted after killing project " + this.getAttribute('data-index'));
     };
     for (let i = 0; i < projects.length; i += 1) {
         projects[i].addEventListener('click', removeProject, false);
