@@ -1,5 +1,6 @@
 const { default: todoProject } = require("./todoproject");
 const { default: todoItem } = require("./todoitem");
+import { format } from 'date-fns';
 
 export const DisplayController = (() => {
 
@@ -11,9 +12,11 @@ export const DisplayController = (() => {
     };
 
     const prepareItemObject = () => {
+        let date = Date.parse(document.getElementById('inputDate').value);
+        console.log(format(date, 'dd/MM/yyy'));
         let title = document.getElementById('inputTitle').value;
         let description = document.getElementById('inputDescription').value;
-        let duedate = document.getElementById('inputDate').value;
+        let duedate = format(date, 'dd/MM/yyy');
         let priority = document.getElementById('inputPriority').value;
         let item = todoItem(title, description, duedate, priority);
         console.log(item);
