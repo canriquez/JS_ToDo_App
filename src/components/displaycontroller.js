@@ -12,19 +12,13 @@ export const DisplayController = (() => {
     };
 
     const prepareItemObject = () => {
-        //let date = Date.parse(document.getElementById('inputDate').value);
         let parts = document.getElementById('inputDate').value.split("-");
-        let date = Date.parse(parts[0] + '-' + parts[1] + '-' + parts[2]);
-        console.log("parts :" + parts + " date object : " + date)
-
-        console.log("format() :" + format(date, 'dd/MM/yyy'));
+        let date = new Date(parts[0] + '/' + parts[1] + '/' + parts[2]);
         let title = document.getElementById('inputTitle').value;
         let description = document.getElementById('inputDescription').value;
-        //let duedate = format(date, 'dd/MM/yyy');
         let duedate = date;
         let priority = document.getElementById('inputPriority').value;
         let item = todoItem(title, description, duedate, priority);
-        console.log(item);
         return item;
     };
 
