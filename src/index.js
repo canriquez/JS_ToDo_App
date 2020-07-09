@@ -48,8 +48,8 @@ function renderProjects() {
         <div class="card-body d-flex flex-row justify-content-between align-items-center">
             <p class="project m-0">${book.getProjects()[i].getName()}</p>
             <div class="action-icons d-flex flex-row justify-content-around align-items-center">
-                <span id="edit${i}" class="glyphicon glyphicon-pencil"></span>
-                <span id="remove${i}" class="glyphicon glyphicon-remove"></span>
+                <span id="edit${i}" class="glyphicon glyphicon-pencil action-edit-project" data-index=${i}></span>
+                <span id="remove${i}" class="glyphicon glyphicon-remove action-remove-project" data-index=${i}></span>
             </div>
         </div>
         </div>`;
@@ -96,8 +96,8 @@ function renderItems(project) {
                     <p class="m-0">${item.getPriority()}</p>
                 </div>
                     <div class="action-icons d-flex flex-row justify-content-around align-items-center">
-                        <span id="edit${i}" class="glyphicon glyphicon-pencil"></span>
-                        <span id="remove${i}" class="glyphicon glyphicon-remove"></span>
+                        <span id="edit${i}" class="glyphicon glyphicon-pencil action-edit-item" data-index=${i}></span>
+                        <span id="remove${i}" class="glyphicon glyphicon-remove action-remove-item" data-index=${i}></span>
                     </div>
                 </div>
             </div>`;
@@ -116,8 +116,8 @@ function renderItems(project) {
                     <p class="m-0">${item.getPriority()}</p>
                 </div>
                 <div class="action-icons d-flex flex-row justify-content-around align-items-center">
-                    <span id="edit${i}" class="glyphicon glyphicon-pencil"></span>
-                    <span id="remove${i}" class="glyphicon glyphicon-remove"></span>
+                    <span id="edit${i}" class="glyphicon glyphicon-pencil action-edit-item" data-index=${i}></span>
+                    <span id="remove${i}" class="glyphicon glyphicon-remove action-remove-item" data-index=${i}></span>
                 </div>
             </div>
         </div>`;
@@ -139,8 +139,8 @@ function renderItems(project) {
                     <p class="m-0">${item.getPriority()}</p>
                 </div>
                 <div class="action-icons d-flex flex-row justify-content-around align-items-center">
-                    <span id="edit${i}" class="glyphicon glyphicon-pencil"></span>
-                    <span id="remove${i}" class="glyphicon glyphicon-remove"></span>
+                    <span id="edit${i}" class="glyphicon glyphicon-pencil action-edit-item" data-index=${i}></span>
+                    <span id="remove${i}" class="glyphicon glyphicon-remove action-remove-item" data-index=${i}></span>
                 </div>
             </div>
         </div>`;
@@ -157,23 +157,56 @@ function addListenersToProjects() {
     //add listener to projects
     const project_items = document.getElementsByClassName('projectItem');
     const showListProjects = function showListProjects() {
-        console.log(this.getAttribute('data-index'));
-        renderItems(this.getAttribute('data-index'));
         book.setDomSelectedProject(this.getAttribute('data-index'));
         DisplayController.selectDomProject(this.getAttribute('data-index'));
+        prepareItems();
     };
     for (let i = 0; i < project_items.length; i += 1) {
         project_items[i].addEventListener('click', showListProjects, false);
     }
+}
 
+function addItemActionListeners() {
+    const items_action = document.getElementsByClassName('action-remove-item');
+    const removeItem = function removeItem() {
+        console.log('remoteItem');
+        console.log(this.getAttribute('data-index'));
+        let currentProject = book.getSingleProject(book.getDomSelectedProject());
+        currentProject.removeItem(this.getAttribute('data-index'));
+        prepareItems();
+    };
+    for (let i = 0; i < items_action.length; i += 1) {
+        items_action[i].addEventListener('click', removeItem, false);
+    }
+}
+
+function addProjectActionListeners() {
+    const projects = document.getElementsByClassName('action-remove-project');
+    const removeProject = function removeProject() {
+        book.removeProject(this.getAttribute('data-index'));
+        prepareProjects();
+    };
+    for (let i = 0; i < projects.length; i += 1) {
+        projects[i].addEventListener('click', removeProject, false);
+    }
+}
+
+function prepareProjects() {
+    renderProjects();
+    DisplayController.selectDomProject(book.getDomSelectedProject())
+    addListenersToProjects();
+    addProjectActionListeners();
+    prepareItems();
+}
+
+function prepareItems() {
+    renderItems(book.getDomSelectedProject());
+    addItemActionListeners();
 }
 
 document.addEventListener('DOMContentLoaded', () => {
     book.setDomSelectedProject(0); //sets project default as selected;
-    renderProjects();
-    renderItems(book.getDomSelectedProject());
-    DisplayController.selectDomProject(book.getDomSelectedProject())
-    addListenersToProjects();
+    prepareProjects();
 
     //add listener to buttons
     document.getElementById('btnAddProject').addEventListener('click', () => {
@@ -184,10 +217,7 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
             p = book.addProject(p.getName());
             book.setDomSelectedProject(p.getProjectId());
-            renderProjects();
-            renderItems(p.getProjectId());
-            addListenersToProjects();
-            DisplayController.selectDomProject(p.getProjectId());
+            prepareProjects();
         };
     });
 
@@ -205,8 +235,7 @@ document.addEventListener('DOMContentLoaded', () => {
             } else {
                 currentProject.addItem(domItem);
                 DisplayController.clearItemProjectForm();
-                renderItems(book.getDomSelectedProject());
-                addListenersToProjects();
+                prepareItems();
             }
         };
 

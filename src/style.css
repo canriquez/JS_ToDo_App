@@ -97,4 +97,5 @@
 .action-icons span:hover,
 .projectItem .action-icons span:hover {
     color: red;
+    cursor: pointer;
 }
