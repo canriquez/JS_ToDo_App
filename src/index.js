@@ -184,6 +184,7 @@ function addProjectActionListeners() {
     const projects = document.getElementsByClassName('action-remove-project');
     const removeProject = function removeProject() {
         book.removeProject(this.getAttribute('data-index'));
+        book.setDomSelectedProject(0);
         prepareProjects();
     };
     for (let i = 0; i < projects.length; i += 1) {
@@ -193,7 +194,7 @@ function addProjectActionListeners() {
 
 function prepareProjects() {
     renderProjects();
-    DisplayController.selectDomProject(book.getDomSelectedProject())
+    DisplayController.selectDomProject(book.getDomSelectedProject());
     addListenersToProjects();
     addProjectActionListeners();
     prepareItems();

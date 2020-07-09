@@ -29,16 +29,20 @@ export const todoBook = (username) => {
     const getSingleProject = (index) => projects[index];
 
     const projectExists = (project) => {
-        return projects.some(function (current) {
+        return projects.some(function(current) {
             return current.getName().toLowerCase() === project.getName().toLowerCase()
         });
     }
 
-
     const removeProject = (projectId) => {
-        if (projectId <= projects.length - 1) {
-            projects.splice(projectId, 1);
-            return true;
+        console.log("rmeove proj" + projectId);
+        if (projectId === '0') {
+            return false;
+        } else {
+            if (projectId <= projects.length - 1) {
+                projects.splice(projectId, 1);
+                return true;
+            }
         }
         return false;
     };

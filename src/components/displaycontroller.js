@@ -23,11 +23,14 @@ export const DisplayController = (() => {
     };
 
     const selectDomProject = (project) => {
+        console.log("select dom " + project);
         const project_items = document.getElementsByClassName('projectItem');
         for (let i = 0; i < project_items.length; i += 1) {
             project_items[i].classList.remove('selectedProject');;
         }
+        console.log('domproj');
         const domProject = document.getElementById('p' + project);
+        console.log('class');
         domProject.classList.add('selectedProject');
     }
 
