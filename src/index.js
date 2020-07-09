@@ -198,9 +198,16 @@ document.addEventListener('DOMContentLoaded', () => {
             console.log('no project selected');
             return;
         } else {
-            book.getSingleProject(book.getDomSelectedProject()).addItem(domItem);
-            renderItems(book.getDomSelectedProject());
-            addListenersToProjects();
+            let currentProject = book.getSingleProject(book.getDomSelectedProject());
+            console.log(domItem.getPriority())
+            if (domItem.getTitle() === '' || currentProject.itemExists(domItem) || domItem.getPriority() === '0' || domItem.isOverdue()) {
+                console.log('item title empty');
+                return;
+            } else {
+                currentProject.addItem(domItem);
+                renderItems(book.getDomSelectedProject());
+                addListenersToProjects();
+            }
         };
 
     });
