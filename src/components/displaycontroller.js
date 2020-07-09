@@ -22,6 +22,11 @@ export const DisplayController = (() => {
         return item;
     };
 
+    const readItemUpdateValue = (itemProperty) => {
+        let property = document.getElementById(itemProperty).value;
+        return property;
+    }
+
     const selectDomProject = (project) => {
         console.log("select dom " + project);
         const project_items = document.getElementsByClassName('projectItem');
@@ -45,7 +50,8 @@ export const DisplayController = (() => {
         prepareProjectObject,
         prepareItemObject,
         selectDomProject,
-        clearItemProjectForm
+        clearItemProjectForm,
+        readItemUpdateValue
     }
 
 })();

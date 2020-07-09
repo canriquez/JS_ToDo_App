@@ -125,7 +125,7 @@ function renderItems(project) {
             htmlTagLater += `<div class="card projectItem" id="item${i}">
             <div class="card-body d-flex flex-row justify-content-between align-items-center pt-4">
                 <div class="item-info">
-                    <h3>${item.getTitle()}</h3>
+                    <h3 class="editItemTitle" data-index=${i} >${item.getTitle()}</h3>
                     <p>${item.getDescription()}</p>
                 </div>
                 <div class="due-box  d-flex flex-row justify-content-around align-items-center">
@@ -157,7 +157,7 @@ function addListenersToProjects() {
     //add listener to projects
     const project_items = document.getElementsByClassName('projectItem');
     const showListProjects = function showListProjects() {
-        console.log("clicl on select project : " + this.getAttribute('data-index'));
+        console.log("click on select project : " + this.getAttribute('data-index'));
         book.setDomSelectedProject(this.getAttribute('data-index'));
         DisplayController.selectDomProject(this.getAttribute('data-index'));
         prepareItems();
@@ -167,19 +167,83 @@ function addListenersToProjects() {
     }
 }
 
+
+function addItemUpdateListeners() {
+    const items_update_action = document.getElementsByClassName('action-save-item');
+
+    const saveItem = function saveItem(event) {
+        let currentProject = book.getSingleProject(book.getDomSelectedProject());
+        let item = this.getAttribute('data-index');
+        let newValue = DisplayController.readItemUpdateValue('inputEditTitle');
+        currentProject.getProjectItems()[item].setTitle(newValue);
+        prepareItems();
+        console.log('now trying to clear editing flag')
+        currentProject.getProjectItems()[item].clearEditing();
+        console.log("Just finished editing. editing item? : " + currentProject.getProjectItems()[item].getEditing());
+        event.stopPropagation();
+        console.log("...and event propagation halted after editing Title " + this.getAttribute('data-index'));
+    }
+
+    for (let i = 0; i < items_update_action.length; i += 1) {
+        items_update_action[i].addEventListener('click', saveItem, false);
+    }
+
+}
+
+
+
 function addItemActionListeners() {
-    const items_action = document.getElementsByClassName('action-remove-item');
+    const items_remove_action = document.getElementsByClassName('action-remove-item');
+    const items_titleEdit_action = document.getElementsByClassName('editItemTitle');
+
     const removeItem = function removeItem() {
-        console.log('remoteItem');
+        console.log('click on removeItem');
         console.log(this.getAttribute('data-index'));
         console.log("click Item remove - project : " + book.getDomSelectedProject() + " - item :" + this.getAttribute('data-index'));
         let currentProject = book.getSingleProject(book.getDomSelectedProject());
         currentProject.removeItem(this.getAttribute('data-index'));
         prepareItems();
     };
-    for (let i = 0; i < items_action.length; i += 1) {
-        items_action[i].addEventListener('click', removeItem, false);
+
+    const editTitleItem = function editTitleItem(event) {
+        let currentProject = book.getSingleProject(book.getDomSelectedProject());
+        let item = this.getAttribute('data-index');
+        console.log('catch editing title click');
+        console.log("editing item? : " + currentProject.getProjectItems()[item].getEditing());
+
+        if (currentProject.getProjectItems()[item].getEditing()) { return }
+
+        currentProject.getProjectItems()[item].setEditing();
+
+        console.log('click on editItem - Project : ' + book.getDomSelectedProject() + ", Item :" + this.getAttribute('data-index'));
+        console.log(this.getAttribute('data-index'));
+        this.removeEventListener(event, editTitleItem, true)
+        // render inputs on the element's Item to edit
+        this.classList.remove('editItemTitle');
+        this.innerHTML = `<input type="text" value="
+        ${this.innerHTML}
+        "
+        id="inputEditTitle"
+        >
+        <div>
+        <span id="save${item}" class="glyphicon glyphicon-floppy-disk action-save-item" data-index=${item}></span>
+        <span id="cancell${item}" class="glyphicon glyphicon-remove action-remove-item" data-index=${item}></span>
+        </div>`;
+        addItemUpdateListeners();
+
+        // render accept icon to add changes
+        // read new form imputs
+        // save modified item in the project
+        // re-render items
     }
+
+    for (let i = 0; i < items_remove_action.length; i += 1) {
+        items_remove_action[i].addEventListener('click', removeItem, false);
+    }
+    for (let i = 0; i < items_titleEdit_action.length; i += 1) {
+        items_titleEdit_action[i].addEventListener('click', editTitleItem, false);
+    }
+
 }
 
 function addProjectActionListeners() {
