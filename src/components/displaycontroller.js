@@ -31,10 +31,18 @@ export const DisplayController = (() => {
         domProject.classList.add('selectedProject');
     }
 
+    const clearItemProjectForm = () => {
+        document.getElementById('inputTitle').value = '';
+        document.getElementById('inputDescription').value = '';
+        document.getElementById('inputPriority').value = 'low';
+        document.getElementById('inputDate').value = '';
+    }
+
     return {
         prepareProjectObject,
         prepareItemObject,
         selectDomProject,
+        clearItemProjectForm
     }
 
 })();

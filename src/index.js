@@ -199,12 +199,12 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         } else {
             let currentProject = book.getSingleProject(book.getDomSelectedProject());
-            console.log(domItem.getPriority())
-            if (domItem.getTitle() === '' || currentProject.itemExists(domItem) || domItem.getPriority() === '0' || domItem.isOverdue()) {
+            if (domItem.getTitle() === '' || currentProject.itemExists(domItem) || domItem.isOverdue()) {
                 console.log('item title empty');
                 return;
             } else {
                 currentProject.addItem(domItem);
+                DisplayController.clearItemProjectForm();
                 renderItems(book.getDomSelectedProject());
                 addListenersToProjects();
             }
