@@ -6,11 +6,10 @@ import { differenceInCalendarDays, format } from 'date-fns';
 import { todoItem } from './components/todoitem';
 import { todoBook } from './components/todobook';
 import { DisplayController } from './components/displaycontroller';
+import { Storage } from './components/storage';
 
 // navbar logo
 import logo from './icons/logo.svg';
-
-
 
 require('webpack-icons-installer');
 
@@ -18,19 +17,31 @@ const logoIcon = new Image();
 logoIcon.src = logo;
 document.getElementById('brandLogo').appendChild(logoIcon);
 
-// Create new project book for user1
-const book = todoBook('user1');
-book.initialize(); // Creates a new project "default" with id=0;
+//Storage.clearStorage();
+
+let book = {};
+
+if (Storage.getObjectStorage()) {
+    let oBook = Storage.getObjectStorage();
+    console.log("stringify: " + JSON.stringify(oBook))
+    book = oBook["book"];
+    console.log("object: " + JSON.stringify(book));
+} else {
+    book = todoBook('user1');
+    book.initialize();
+    console.log(book);
+    Storage.storeObject(book);
+}
 
 //const p1 = todoProject('TODO APP');
-const p1 = book.addProject('TODO APP'); // Creat a project with ID '1'
+//const p1 = book.addProject('TODO APP'); // Creat a project with ID '1'
 
-const item1 = todoItem('Define Data model', 'Create excel with data model and methods', new Date(), 'high');
-const item2 = todoItem('Create basic Factories', 'Create factory files and methods', new Date(), 'high');
+//const item1 = todoItem('Define Data model', 'Create excel with data model and methods', new Date(), 'high');
+//const item2 = todoItem('Create basic Factories', 'Create factory files and methods', new Date(), 'high');
 ////const item3 = todoItem('Create screens wireframes', 'Create initial screen designs', '2020-07-19', 'high');
 
-p1.addItem(item1); // Item added into the project's array with the project Id Set.
-p1.addItem(item2); // Item added into the project's array with the project Id Set.
+//p1.addItem(item1); // Item added into the project's array with the project Id Set.
+//p1.addItem(item2); // Item added into the project's array with the project Id Set.
 //p1.addItem(item3); // Item added into the project's array with the project Id Set.
 
 //book.addProject(p1);
@@ -48,7 +59,6 @@ function renderProjects() {
         <div class="card-body d-flex flex-row justify-content-between align-items-center">
             <p class="editProjectName" data-index="${i}" project m-0">${book.getProjects()[i].getName()}</p>
             <div class="action-icons d-flex flex-row justify-content-around align-items-center">
-                <span id="edit${i}" class="glyphicon glyphicon-pencil action-edit-project" data-index=${i}></span>
                 <span id="remove${i}" class="glyphicon glyphicon-remove action-remove-project" data-index=${i}></span>
             </div>
         </div>
@@ -103,7 +113,6 @@ function renderItems(project) {
                 <p class="m-0 editItem" data-index="${i}" data-element="priority">${item.getPriority()}</p>
             </div>
             <div class="action-icons d-flex flex-row justify-content-around align-items-center">
-                <span id="edit${i}" class="glyphicon glyphicon-pencil action-edit-item" data-index=${i}></span>
                 <span id="remove${i}" class="glyphicon glyphicon-remove action-remove-item" data-index=${i}></span>
             </div>
         </div>
@@ -127,7 +136,6 @@ function renderItems(project) {
                     <p class="m-0 editItem" data-index="${i}" data-element="priority">${item.getPriority()}</p>
                 </div>
                 <div class="action-icons d-flex flex-row justify-content-around align-items-center">
-                    <span id="edit${i}" class="glyphicon glyphicon-pencil action-edit-item" data-index=${i}></span>
                     <span id="remove${i}" class="glyphicon glyphicon-remove action-remove-item" data-index=${i}></span>
                 </div>
             </div>
@@ -151,7 +159,6 @@ function renderItems(project) {
                     <p class="m-0 editItem" data-index="${i}" data-element="priority">${item.getPriority()}</p>
                 </div>
                 <div class="action-icons d-flex flex-row justify-content-around align-items-center">
-                    <span id="edit${i}" class="glyphicon glyphicon-pencil action-edit-item" data-index=${i}></span>
                     <span id="remove${i}" class="glyphicon glyphicon-remove action-remove-item" data-index=${i}></span>
                 </div>
             </div>
@@ -465,6 +472,7 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         } else {
             p = book.addProject(p.getName());
+            Storage.storeObject(book);
             book.setDomSelectedProject(p.getProjectId());
             prepareProjects();
         };
