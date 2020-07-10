@@ -46,7 +46,7 @@ function renderProjects() {
         htmlTag += `<div class="card projectItem" data-index="${i}" id="p${i}">
         
         <div class="card-body d-flex flex-row justify-content-between align-items-center">
-            <p class="project m-0">${book.getProjects()[i].getName()}</p>
+            <p class="editProjectName" data-index="${i}" project m-0">${book.getProjects()[i].getName()}</p>
             <div class="action-icons d-flex flex-row justify-content-around align-items-center">
                 <span id="edit${i}" class="glyphicon glyphicon-pencil action-edit-project" data-index=${i}></span>
                 <span id="remove${i}" class="glyphicon glyphicon-remove action-remove-project" data-index=${i}></span>
@@ -236,6 +236,43 @@ function addItemUpdateListeners() {
 
 
 
+function addProjectEditListeners() {
+    const projects_titleEdit_action = document.getElementsByClassName('editProjectName');
+
+
+    const editProjectName = function editProjectName(event) {
+        console.log('click on editProjectName');
+        let projectNameToEdit = this.getAttribute('data-index');
+
+        console.log("Changing selected project to ptoject: : " + projectNameToEdit);
+        book.setDomSelectedProject(this.getAttribute('data-index'));
+        DisplayController.selectDomProject(this.getAttribute('data-index'));
+        prepareItems();
+
+        let selecteProject = book.getDomSelectedProject();
+
+        console.log("project name edit Clicked: " + this.getAttribute('data-index'));
+        console.log("Now, selected Project is project: " + selecteProject);
+
+        event.stopPropagation();
+        console.log("Killing propagation after selecting project: " + selecteProject);
+
+        if (projectNameToEdit === selecteProject) {
+            console.log('Lets Edit the Project name')
+        } else {
+            return;
+        }
+
+
+    }
+
+    for (let i = 0; i < projects_titleEdit_action.length; i += 1) {
+        projects_titleEdit_action[i].addEventListener('click', editProjectName, false);
+    }
+}
+
+
+
 function addItemActionListeners() {
     const items_remove_action = document.getElementsByClassName('action-remove-item');
     const items_titleEdit_action = document.getElementsByClassName('editItem');
@@ -353,6 +390,7 @@ function prepareProjects() {
     DisplayController.selectDomProject(book.getDomSelectedProject());
     addListenersToProjects();
     addProjectActionListeners();
+    addProjectEditListeners()
     prepareItems();
 }
 
