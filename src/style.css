@@ -88,6 +88,11 @@
     font-size: 1.2rem;
 }
 
+.editItem:hover {
+    border: 1px dotted lightblue;
+    cursor: pointer;
+}
+
 .due-box p {
     margin: 1;
     text-align: right;

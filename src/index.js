@@ -22,22 +22,22 @@ document.getElementById('brandLogo').appendChild(logoIcon);
 const book = todoBook('user1');
 book.initialize(); // Creates a new project "default" with id=0;
 
-// const p1 = todoProject('TODO APP');
+//const p1 = todoProject('TODO APP');
 const p1 = book.addProject('TODO APP'); // Creat a project with ID '1'
 
-const item1 = todoItem('Define Data model', 'Create excel with data model and methods', '2020-07-08', 'high');
-const item2 = todoItem('Create basic Factories', 'Create factory files and methods', '2020-07-09', 'high');
-const item3 = todoItem('Create screens wireframes', 'Create initial screen designs', '2020-07-19', 'high');
+const item1 = todoItem('Define Data model', 'Create excel with data model and methods', new Date(), 'high');
+const item2 = todoItem('Create basic Factories', 'Create factory files and methods', new Date(), 'high');
+////const item3 = todoItem('Create screens wireframes', 'Create initial screen designs', '2020-07-19', 'high');
 
 p1.addItem(item1); // Item added into the project's array with the project Id Set.
 p1.addItem(item2); // Item added into the project's array with the project Id Set.
-p1.addItem(item3); // Item added into the project's array with the project Id Set.
+//p1.addItem(item3); // Item added into the project's array with the project Id Set.
 
-// book.addProject(p1);
-console.log(`project Name: ${p1.getName()}, project Id: ${p1.getProjectId()}`);
+//book.addProject(p1);
+/* console.log(`project Name: ${p1.getName()}, project Id: ${p1.getProjectId()}`);
 console.log(`project Name: ${p1.getName()}Item 0's project: ${p1.getProjectItems()[1].getProjectId()}`);
 console.log(`name :${book.getProjects()[0].getName()}`);
-console.log(`id :${book.getProjects()[0].getProjectId()}`);
+console.log(`id :${book.getProjects()[0].getProjectId()}`); */
 // / Render projects
 
 function renderProjects() {
@@ -75,11 +75,14 @@ function renderItems(project) {
 
     let i = 0;
     book.getSingleProject(project).getProjectItems().forEach(item => {
-        const date = Date.parse(item.getDueDate());
-        const todayDate = new Date();
-        console.log('today is: ' + format(todayDate, "dd/MM/yyy") + " - Item date is :" + format(date, "dd/MM/yyy"));
+        console.log('rendering items in the today/tomorrow groups');
+        console.log(item.getDueDate());
 
-        const result = differenceInCalendarDays(date, todayDate);
+        //const date = Date.parse(item.getDueDate());
+        //const todayDate = new Date();
+        console.log('today is: ' + format(new Date(), "dd/MM/yyy") + " - Item date is :" + format(item.getDueDate(), "dd/MM/yyy"));
+
+        const result = differenceInCalendarDays(item.getDueDate(), new Date());
         console.log("item :" + item.getTitle() + " due day in: " + result + " days.");
         if (result === 0) {
             htmlTagToday += `<div class="card projectItem" id="item${i}">
@@ -91,7 +94,7 @@ function renderItems(project) {
             </div>
             <div class="due-box  d-flex flex-row justify-content-around align-items-center">
                 <h5 class="m-0">Due date:</h5>
-                <p class="m-0 editItem" data-index="${i}" data-element="dueDate">${format(date, "dd/MM/yyy")}</p>
+                <p class="m-0 editItem" data-index="${i}" placeholder="dd-mm-yyyy" data-element="dueDate">${item.getHtmlSafeDueDate()}</p>
             </div>
             <div class="item-status">
                 <p class="m-0">${(result < 0 ? " Overdue" : " Upcoming")}</p>
@@ -115,7 +118,7 @@ function renderItems(project) {
                 </div>
                 <div class="due-box  d-flex flex-row justify-content-around align-items-center">
                     <h5 class="m-0">Due date:</h5>
-                    <p class="m-0 editItem" data-index="${i}" data-element="dueDate">${format(date, "dd/MM/yyy")}</p>
+                    <p class="m-0 editItem" data-index="${i}" placeholder="dd-mm-yyyy" data-element="dueDate">${item.getHtmlSafeDueDate()}</p>
                 </div>
                 <div class="item-status">
                     <p class="m-0">${(result < 0 ? " Overdue" : " Upcoming")}</p>
@@ -139,7 +142,7 @@ function renderItems(project) {
                 </div>
                 <div class="due-box  d-flex flex-row justify-content-around align-items-center">
                     <h5 class="m-0">Due date:</h5>
-                    <p class="m-0 editItem" data-index="${i}" data-element="dueDate">${format(date, "dd/MM/yyy")}</p>
+                    <p class="m-0 editItem" data-index="${i}" placeholder="dd-mm-yyyy" data-element="dueDate">${item.getHtmlSafeDueDate()}</p>
                 </div>
                 <div class="item-status">
                     <p class="m-0">${(result < 0 ? " Overdue" : " Upcoming")}</p>
@@ -276,9 +279,13 @@ function addItemActionListeners() {
                 </div>`;
                 break;
             case "dueDate":
-                this.innerHTML = `<input type="date" value="${itemObject.getDueDate().trim()}"
+                console.log("dueDate Case: Objects are - ")
+                console.log(itemObject.getDueDate());
+                let editDueDate = itemObject.getDueDate();
+
+                this.innerHTML = `<input type="date" value="${format(editDueDate, "yyyy-MM-dd")}"
                 id="inputEdit_${element}"
-                placeholder="dd-mm-yyyy"
+                
                 >
                 <div>
                 <span id="save${item}" class="glyphicon glyphicon-floppy-disk action-save-item" data-index="${item}" data-element="${element}"></span>
