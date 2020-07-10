@@ -18,7 +18,8 @@ logoIcon.src = logo;
 document.getElementById('brandLogo').appendChild(logoIcon);
 
 let book = todoBook('user1');
-book.initialize();
+/*book.initialize();
+
 const p1 = book.addProject('TODO APP');
 const item1 = todoItem('Define Data model', 'Create excel with data model and methods', new Date(), 'high');
 const item2 = todoItem('Create basic Factories', 'Create factory files and methods', new Date(), 'high');
@@ -26,12 +27,33 @@ const item2 = todoItem('Create basic Factories', 'Create factory files and metho
 p1.addItem(item1);
 p1.addItem(item2); // Item added into the project's array with the project Id Set.
 
+console.log("our projects: ");
+console.log(book.getProjects());*/
+
+/*
+let jsonObj = {
+    "projects": [{
+            "name": "default",
+            "projectId": 0,
+            "items": [
+                { "title": "Define Data model", "description": "Create excel with data model and methods", "dueDate": "2020-07-10", "priority": "high", "status": "open", "projectId": 1 },
+                { "title": "Create basic Factories", "description": "Create factory files and methods", "dueDate": "2020-07-10", "priority": "high", "status": "open", "projectId": 1 }
+            ]
+        },
+        {
+            "name": "TODO APP",
+            "projectId": 1,
+            "items": []
+        }
+    ]
+};
+
+console.log("my json object");
+console.log(jsonObj.projects);*/
 
 /// Book Storage Metod
-
-
 if (Storage.getObjectStorage()) {
-    let storedBook = Storage.getObjectStorage();
+    book.convertJSONtoProjects(Storage.getObjectStorage());
 }
 
 //Storage.clearStorage();
@@ -377,7 +399,7 @@ function addItemActionListeners() {
         currentProject.setEditing();
 
         this.removeEventListener(event, editItem, true)
-        // render inputs on the element's Item to edit
+            // render inputs on the element's Item to edit
         this.classList.remove('editItem');
 
         console.log("editing: " + element);

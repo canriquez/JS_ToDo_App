@@ -1,4 +1,5 @@
 import { todoProject } from './todoproject';
+import todoItem from './todoitem';
 
 export const todoBook = (username) => {
     let projects = [];
@@ -9,7 +10,9 @@ export const todoBook = (username) => {
     const setEditing = () => { editing = true; };
     const getEditing = () => editing;
     const clearEditing = () => { editing = false; };
-
+    const setProjects = (arr) => {
+        projects = arr;
+    }
     const getUser = () => username;
     const changeUser = (newUsername) => {
         username = newUsername;
@@ -64,6 +67,16 @@ export const todoBook = (username) => {
         return selectedProject;
     };
 
+    const convertJSONtoProjects = (json) => {
+        json.projects.forEach(element => {
+            let project_to_add = addProject(element.name);
+            element.items.forEach(item => {
+                let item_to_add = todoItem(item.title, item.description, new Date(item.dueDate), item.priority);
+                project_to_add.addItem(item_to_add);
+            });
+        });
+    }
+
     return {
         getUser,
         changeUser,
@@ -79,7 +92,9 @@ export const todoBook = (username) => {
         setEditing,
         getEditing,
         clearEditing,
+        setProjects,
+        convertJSONtoProjects,
     };
-};
+}
 
 export default todoBook;
