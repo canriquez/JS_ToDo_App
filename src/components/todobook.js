@@ -4,6 +4,12 @@ export const todoBook = (username) => {
     let projects = [];
     let projectId = -1;
     let selectedProject = -1;
+    let editing = false;
+
+    const setEditing = () => { editing = true; };
+    const getEditing = () => editing;
+    const clearEditing = () => { editing = false; };
+
     const getUser = () => username;
     const changeUser = (newUsername) => {
         username = newUsername;
@@ -70,6 +76,9 @@ export const todoBook = (username) => {
         clearProjects,
         setDomSelectedProject,
         getDomSelectedProject,
+        setEditing,
+        getEditing,
+        clearEditing,
     };
 };
 

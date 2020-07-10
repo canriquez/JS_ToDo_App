@@ -1,14 +1,14 @@
 export const todoProject = (name, projectid) => {
     let projectStatus = 'open';
     const projectId = projectid;
-    const projectName = name;
     const projectItems = [];
     let editing = false;
 
     const setEditing = () => { editing = true; };
     const getEditing = () => editing;
     const clearEditing = () => { editing = false; };
-    const getName = () => projectName;
+    const getName = () => name;
+    const setName = (newName) => { name = newName };
     const getProjectId = () => projectId;
     const getProjectItems = () => projectItems;
     const getProjectStatus = () => projectStatus;
@@ -19,8 +19,6 @@ export const todoProject = (name, projectid) => {
         }
         return false;
     };
-
-    const changeName = (newName) => { name = newName; };
 
     const addItem = (item) => {
         item.setProject(projectId);
@@ -45,13 +43,13 @@ export const todoProject = (name, projectid) => {
         getProjectItems,
         getProjectStatus,
         closeProject,
-        changeName,
         addItem,
         itemExists,
         removeItem,
         setEditing,
         getEditing,
         clearEditing,
+        setName,
     };
 };
 

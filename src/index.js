@@ -169,6 +169,7 @@ function addListenersToProjects() {
     //add listener to projects
     const project_items = document.getElementsByClassName('projectItem');
     const showListProjects = function showListProjects() {
+        if (book.getEditing()) { return }
         console.log("click on select project : " + this.getAttribute('data-index'));
         book.setDomSelectedProject(this.getAttribute('data-index'));
         DisplayController.selectDomProject(this.getAttribute('data-index'));
@@ -234,6 +235,43 @@ function addItemUpdateListeners() {
 
 }
 
+function addProjectCancelListeners() {
+    const cancel_action = document.getElementsByClassName('action-cancel-project');
+    const cancelProject = function cancelProject(event) {
+        book.clearEditing();
+        event.stopPropagation();
+        prepareProjects();
+    }
+    for (let i = 0; i < cancel_action.length; i += 1) {
+        cancel_action[i].addEventListener('click', cancelProject, false);
+    }
+}
+
+
+function addProjectUpdateListeners() {
+    const update_action = document.getElementsByClassName('action-save-project');
+
+    const saveProject = function saveProject(event) {
+        let currentProject = book.getSingleProject(book.getDomSelectedProject());
+        let value = DisplayController.readItemUpdateValue("inputEditProject");
+        console.log("new project name: " + value);
+        console.log(currentProject);
+        currentProject.setName(value);
+
+        book.clearEditing();
+        console.log("is Editing?: " + book.getEditing());
+        console.log("Just finished editing project title. editing project? : " + book.getEditing());
+        event.stopPropagation();
+        console.log("...and event propagation halted after editing Title " + currentProject.getName());
+        prepareProjects();
+    }
+
+    for (let i = 0; i < update_action.length; i += 1) {
+        update_action[i].addEventListener('click', saveProject, false);
+    }
+
+}
+
 
 
 function addProjectEditListeners() {
@@ -241,6 +279,9 @@ function addProjectEditListeners() {
 
 
     const editProjectName = function editProjectName(event) {
+        console.log("checking before return Editing?: " + book.getEditing());
+        if (book.getEditing()) { return }
+
         console.log('click on editProjectName');
         let projectNameToEdit = this.getAttribute('data-index');
 
@@ -259,10 +300,21 @@ function addProjectEditListeners() {
 
         if (projectNameToEdit === selecteProject) {
             console.log('Lets Edit the Project name')
+            book.setEditing();
+            console.log("is Editing?: " + book.getEditing());
+            this.innerHTML = `<input type="text" value="${this.innerHTML}"
+                id="inputEditProject"
+                >
+                <div>
+                <span class="glyphicon glyphicon-floppy-disk action-save-project"></span>
+                <span class="glyphicon glyphicon-remove action-cancel-project"></span>
+                </div>`;
         } else {
             return;
         }
 
+        addProjectCancelListeners();
+        addProjectUpdateListeners();
 
     }
 
@@ -299,7 +351,7 @@ function addItemActionListeners() {
         currentProject.setEditing();
 
         this.removeEventListener(event, editItem, true)
-        // render inputs on the element's Item to edit
+            // render inputs on the element's Item to edit
         this.classList.remove('editItem');
 
         console.log("editing: " + element);
