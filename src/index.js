@@ -17,11 +17,28 @@ const logoIcon = new Image();
 logoIcon.src = logo;
 document.getElementById('brandLogo').appendChild(logoIcon);
 
-//Storage.clearStorage();
+let book = todoBook('user1');
+book.initialize();
+const p1 = book.addProject('TODO APP');
+const item1 = todoItem('Define Data model', 'Create excel with data model and methods', new Date(), 'high');
+const item2 = todoItem('Create basic Factories', 'Create factory files and methods', new Date(), 'high');
 
-let book = {};
+p1.addItem(item1);
+p1.addItem(item2); // Item added into the project's array with the project Id Set.
+
+
+/// Book Storage Metod
+
 
 if (Storage.getObjectStorage()) {
+    let storedBook = Storage.getObjectStorage();
+}
+
+//Storage.clearStorage();
+
+//let book = {};
+
+/* if (Storage.getObjectStorage()) {
     let oBook = Storage.getObjectStorage();
     console.log("stringify: " + JSON.stringify(oBook))
     book = oBook["book"];
@@ -31,7 +48,9 @@ if (Storage.getObjectStorage()) {
     book.initialize();
     console.log(book);
     Storage.storeObject(book);
-}
+} */
+
+
 
 //const p1 = todoProject('TODO APP');
 //const p1 = book.addProject('TODO APP'); // Creat a project with ID '1'
@@ -358,7 +377,7 @@ function addItemActionListeners() {
         currentProject.setEditing();
 
         this.removeEventListener(event, editItem, true)
-            // render inputs on the element's Item to edit
+        // render inputs on the element's Item to edit
         this.classList.remove('editItem');
 
         console.log("editing: " + element);
@@ -458,6 +477,7 @@ function prepareItems() {
     currentProject.clearEditing();
     renderItems(book.getDomSelectedProject());
     addItemActionListeners();
+    Storage.saveBook(book);
 }
 
 document.addEventListener('DOMContentLoaded', () => {
