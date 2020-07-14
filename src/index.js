@@ -151,8 +151,8 @@ function renderItems(project) {
         console.log("item :" + item.getTitle() + " due day in: " + result + " days.");
         if (result === 0) {
             htmlTagToday += `<div class="card projectItem" id="item${i}">
-            <div class="card-body d-flex flex-row justify-content-between align-items-center pt-4">
-            <div id="update-${i}"></div>
+            <div id="update-${i}" class="card-body d-flex flex-row justify-content-between align-items-center pt-4">
+            <div data-index="${i}" class="complete-check">  <span class="glyphicon glyphicon-check"></span> </div>
             <div class="item-info">
                 <h3 class="editItem" data-index="${i}" data-element="title">${item.getTitle()}</h3>
                 <p class="editItem" data-index="${i}" data-element="description">${item.getDescription()}</p>
@@ -167,7 +167,7 @@ function renderItems(project) {
             <div class="priority ${prioStyle(item.getPriority())}">
                 <p class="m-0 editItem" data-index="${i}" data-element="priority">${item.getPriority()}</p>
             </div>
-            <div class="action-icons d-flex flex-row justify-content-around align-items-center">
+            <div class="action-icons remove-item d-flex flex-row justify-content-around align-items-center">
                 <span id="remove${i}" class="glyphicon glyphicon-remove action-remove-item" data-index=${i}></span>
             </div>
         </div>
@@ -403,12 +403,18 @@ function addItemActionListeners() {
     const editItem = function editItem(event) {
         let currentProject = book.getSingleProject(book.getDomSelectedProject());
         let item = this.getAttribute('data-index');
+
         let element = this.getAttribute('data-element');
         let itemObject = currentProject.getProjectItems()[item];
+        let itemStatus = itemObject.getStatus();
+        console.log("THIS IS THE STATUS OF THE ITEM CLICKED TO EDIT  :" + itemStatus);
+
 
         let updateIconsTag = document.getElementById('update-' + item);
 
+        if (itemStatus === 'complete') { return }
         if (currentProject.getEditing()) { return }
+
 
         currentProject.setEditing();
 
@@ -499,6 +505,35 @@ function addProjectActionListeners() {
     }
 }
 
+function addUpdateItemListeners() {
+    const updateItems = document.getElementsByClassName('complete-check');
+
+    const toggleItem = function toggleItem(event) {
+        let currentProject = book.getSingleProject(book.getDomSelectedProject());
+        console.log("click toggle item : " + this.getAttribute('data-index'));
+        let itemIndex = this.getAttribute('data-index');
+        let currentItem = currentProject.getProjectItems()[itemIndex]
+        let itemStatus = currentItem.getStatus();
+
+        if (itemStatus === 'open') {
+            console.log("Item is:" + itemStatus);
+            currentItem.completeItem();
+            const domItemTag = document.getElementById('update-' + itemIndex);
+            domItemTag.classList.add('complete-item');
+        } else {
+            console.log("Item is:" + itemStatus);
+            currentItem.openItem();
+            const domItemTag = document.getElementById('update-' + itemIndex);
+            domItemTag.classList.remove('complete-item');
+        }
+    }
+
+
+    for (let i = 0; i < updateItems.length; i += 1) {
+        updateItems[i].addEventListener('click', toggleItem, false);
+    }
+}
+
 function prepareProjects() {
     renderProjects();
     DisplayController.selectDomProject(book.getDomSelectedProject());
@@ -513,6 +548,7 @@ function prepareItems() {
     currentProject.clearEditing();
     renderItems(book.getDomSelectedProject());
     addItemActionListeners();
+    addUpdateItemListeners();
     Storage.saveBook(book);
 }
 
@@ -556,4 +592,6 @@ document.addEventListener('DOMContentLoaded', () => {
         };
 
     });
+
+
 });

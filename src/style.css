@@ -31,7 +31,6 @@
     background-color: yellow;
 }
 
-
 /* ================= Todo Item Cards =============== */
 
 .projectItem {
@@ -42,14 +41,6 @@
 .card-body {
     position: relative;
     padding: 20px 10px;
-}
-
-.projectItem .action-icons {
-    width: 10%;
-}
-
-.projectItem .action-icons span {
-    font-size: 0.9rem;
 }
 
 .due-box {
@@ -115,4 +106,41 @@
 .projectItem .action-icons span:hover {
     color: red;
     cursor: pointer;
+}
+
+.complete-check,
+.remove-item {
+    width: 10%;
+}
+
+.complete-check span {
+    text-align: center;
+    font-size: 1.8rem;
+    margin-left: 50%;
+}
+
+.remove-item span {
+    margin-right: 50%;
+}
+
+/* COmpleted Items */
+
+.complete-item .complete-check span,
+.complete-item .remove-item span {
+    color: lightgray;
+}
+
+.complete-item .item-info h3,
+.complete-item .item-info p,
+.complete-item .due-box h5,
+.complete-item .due-box p {
+    text-decoration: line-through;
+    color: lightgray;
+}
+
+.complete-item .priority,
+.complete-item .priority p,
+.complete-item .item-status,
+.complete-item .item-status p {
+    background-color: lightgray;
 }
