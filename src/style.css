@@ -1,146 +1,148 @@
 /* Navigation */
 
 #brandLogo img {
-    width: 50px;
+  width: 50px;
 }
 
 .projectBook {
-    max-width: 1200px;
-    padding: 20px;
-    margin: 0 auto;
-    height: 80vh;
-    display: grid;
-    grid-gap: 20px;
-    grid-template-columns: 25% 75%;
-    grid-template-areas: "projects todoItems";
+  max-width: 1200px;
+  padding: 20px;
+  margin: 0 auto;
+  height: 80vh;
+  display: grid;
+  grid-gap: 20px;
+  grid-template-columns: 25% 75%;
+  grid-template-areas: "projects todoItems";
 }
 
 .projects {
-    grid-area: projects;
+  grid-area: projects;
 }
 
 .todoItems {
-    grid-area: todoItems;
+  grid-area: todoItems;
 }
 
 .list-group-item {
-    margin: 0;
+  margin: 0;
 }
 
 .selectedProject {
-    background-color: yellow;
+  background-color: yellow;
 }
+
 
 /* ================= Todo Item Cards =============== */
 
 .projectItem {
-    margin: 12px 0;
-    box-shadow: 0 50px 100px rgba(50, 50, 93, 0.05), 0 15px 35px rgba(50, 50, 93, 0.1), 0 5px 15px rgba(0, 0, 0, 0.1);
+  margin: 12px 0;
+  box-shadow: 0 50px 100px rgba(50, 50, 93, 0.05), 0 15px 35px rgba(50, 50, 93, 0.1), 0 5px 15px rgba(0, 0, 0, 0.1);
 }
 
 .card-body {
-    position: relative;
-    padding: 20px 10px;
+  position: relative;
+  padding: 20px 10px;
 }
 
 .due-box {
-    position: absolute;
-    width: 30%;
-    top: 0;
-    right: 0;
+  position: absolute;
+  width: 30%;
+  top: 0;
+  right: 0;
 }
 
 .item-status {
-    position: absolute;
-    width: 15%;
-    bottom: 0;
-    right: 0;
-    background-color: lightblue;
-    color: white;
-    text-align: center;
+  position: absolute;
+  width: 15%;
+  bottom: 0;
+  right: 0;
+  background-color: lightblue;
+  color: white;
+  text-align: center;
 }
 
 .priority {
-    position: absolute;
-    width: 10%;
-    margin: 5px 5px;
-    top: 0;
-    left: 0;
+  position: absolute;
+  width: 10%;
+  margin: 5px 5px;
+  top: 0;
+  left: 0;
 }
 
 .updateItemIcons {
-    position: absolute;
-    margin: 5px 5px;
-    top: 0;
-    left: 11%;
-    color: black;
+  position: absolute;
+  margin: 5px 5px;
+  top: 0;
+  left: 11%;
+  color: black;
 }
 
 .updateItemIcons span {
-    font-size: 1.2rem;
+  font-size: 1.2rem;
 }
 
 .editItem:hover {
-    border: 1px dotted lightblue;
-    cursor: pointer;
+  border: 1px dotted lightblue;
+  cursor: pointer;
 }
 
 .due-box p {
-    margin: 1;
-    text-align: right;
+  margin: 1;
+  text-align: right;
 }
 
 .card-body:hover {
-    background-color: rgba(229, 222, 226, 0.2);
+  background-color: rgba(229, 222, 226, 0.2);
 }
 
 .action-icons {
-    width: 10%;
+  width: 10%;
 }
 
 .action-icons span {
-    font-size: 1.5rem;
-}
-
-.action-icons span:hover,
-.projectItem .action-icons span:hover {
-    color: red;
-    cursor: pointer;
+  font-size: 1.5rem;
 }
 
 .complete-check,
 .remove-item {
-    width: 10%;
+  width: 10%;
 }
 
 .complete-check span {
-    text-align: center;
-    font-size: 1.8rem;
-    margin-left: 50%;
+  text-align: center;
+  font-size: 1.8rem;
+  margin-left: 50%;
 }
 
 .remove-item span {
-    margin-right: 50%;
+  margin-right: 50%;
 }
+
 
 /* COmpleted Items */
 
 .complete-item .complete-check span,
 .complete-item .remove-item span {
-    color: lightgray;
+  color: lightgray;
 }
 
 .complete-item .item-info h3,
 .complete-item .item-info p,
 .complete-item .due-box h5,
 .complete-item .due-box p {
-    text-decoration: line-through;
-    color: lightgray;
+  text-decoration: line-through;
+  color: lightgray;
 }
 
 .complete-item .priority,
 .complete-item .priority p,
 .complete-item .item-status,
 .complete-item .item-status p {
-    background-color: lightgray;
+  background-color: lightgray;
+}
+
+.action-icons span:hover,
+.projectItem .action-icons span:hover {
+  color: red;
+  cursor: pointer;
 }
