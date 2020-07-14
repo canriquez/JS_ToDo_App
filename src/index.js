@@ -16,20 +16,36 @@ require('webpack-icons-installer');
 const logoIcon = new Image();
 logoIcon.src = logo;
 document.getElementById('brandLogo').appendChild(logoIcon);
-
 let book = todoBook('user1');
-/*book.initialize();
 
-const p1 = book.addProject('TODO APP');
-const item1 = todoItem('Define Data model', 'Create excel with data model and methods', new Date(), 'high');
-const item2 = todoItem('Create basic Factories', 'Create factory files and methods', new Date(), 'high');
 
-p1.addItem(item1);
-p1.addItem(item2); // Item added into the project's array with the project Id Set.
+function loadDummyProjects() {
 
-console.log("our projects: ");
-console.log(book.getProjects());*/
+    const p1 = book.addProject('TODO APP');
+    const item1 = todoItem('Define Data model', 'Create excel with data model and methods', new Date(), 'high');
+    const item2 = todoItem('Create basic Factories', 'Create factory files and methods', new Date(), 'high');
 
+    p1.addItem(item1);
+    p1.addItem(item2); // Item added into the project's array with the project Id Set.
+
+    console.log("our projects: ");
+    console.log(book.getProjects());
+}
+
+function initializeBookStorage() {
+    /// Book Storage Metod
+    if (Storage.getObjectStorage()) {
+        console.log("localStorage object present... reading now..")
+        book.convertJSONtoProjects(Storage.getObjectStorage());
+    } else {
+        console.log("localStorage object not present.. generating empty book");
+        book.initialize();
+        Storage.saveBook(book);
+    }
+
+    console.log("After reading local storage book : " + book.getSingleProject(0).getName());
+    loadDummyProjects();
+}
 /*
 let jsonObj = {
     "projects": [{
@@ -51,12 +67,10 @@ let jsonObj = {
 console.log("my json object");
 console.log(jsonObj.projects);*/
 
-/// Book Storage Metod
-if (Storage.getObjectStorage()) {
-    book.convertJSONtoProjects(Storage.getObjectStorage());
-}
+
 
 //Storage.clearStorage();
+
 
 //let book = {};
 
@@ -399,7 +413,7 @@ function addItemActionListeners() {
         currentProject.setEditing();
 
         this.removeEventListener(event, editItem, true)
-            // render inputs on the element's Item to edit
+        // render inputs on the element's Item to edit
         this.classList.remove('editItem');
 
         console.log("editing: " + element);
@@ -503,6 +517,9 @@ function prepareItems() {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
+
+    initializeBookStorage(); // Creates a new book or reads existing storage
+
     book.setDomSelectedProject(0); //sets project default as selected;
     prepareProjects();
 

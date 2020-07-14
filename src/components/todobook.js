@@ -38,7 +38,7 @@ export const todoBook = (username) => {
     const getSingleProject = (index) => projects[index];
 
     const projectExists = (project) => {
-        return projects.some(function(current) {
+        return projects.some(function (current) {
             return current.getName().toLowerCase() === project.getName().toLowerCase()
         });
     }
@@ -75,6 +75,9 @@ export const todoBook = (username) => {
                 project_to_add.addItem(item_to_add);
             });
         });
+        console.log("PROJECTS LENGTH :" + projects.length)
+        console.log("HERE IS THE PROJECT read :" + projects[0].getName());
+        console.log(json);
     }
 
     return {

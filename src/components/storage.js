@@ -4,7 +4,7 @@ export const Storage = (() => {
         localStorage.setItem("book", JSON.stringify(obj));
     }
     const getObjectStorage = () => {
-        console.log("[]: " + localStorage["book"]);
+        console.log("[existing stored object]: " + localStorage["book"]);
         if (localStorage.getItem("book")) {
             console.log("reading the localStorate I got:" + localStorage.getItem("book"))
             return JSON.parse(localStorage.getItem("book"));
