@@ -1,13 +1,12 @@
 import { differenceInCalendarDays, format } from 'date-fns';
 
-export const todoItem = (title, description, dueDate, priority) => {
-    let itemStatus = 'open';
+export const todoItem = (title, description, dueDate, priority, itemStatus = 'open') => {
     let idProject = 0;
 
     const getTitle = () => title;
     const getDescription = () => description;
     const getDueDate = () => dueDate;
-    const getHtmlSafeDueDate = () => format(dueDate, "dd-MM-yyyy");
+    const getHtmlSafeDueDate = () => format(dueDate, 'dd-MM-yyyy');
     const getPriority = () => priority;
     const getStatus = () => itemStatus;
 

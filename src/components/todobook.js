@@ -12,7 +12,7 @@ export const todoBook = (username) => {
     const clearEditing = () => { editing = false; };
     const setProjects = (arr) => {
         projects = arr;
-    }
+    };
     const getUser = () => username;
     const changeUser = (newUsername) => {
         username = newUsername;
@@ -37,22 +37,18 @@ export const todoBook = (username) => {
     const getProjects = () => projects;
     const getSingleProject = (index) => projects[index];
 
-    const projectExists = (project) => {
-        return projects.some(function (current) {
-            return current.getName().toLowerCase() === project.getName().toLowerCase()
-        });
-    }
+    const projectExists = (project) => projects.some((current) => current.getName().toLowerCase() === project.getName().toLowerCase());
 
     const removeProject = (projectId) => {
-        console.log("rmeove proj" + projectId);
+        console.log(`rmeove proj${projectId}`);
         if (projectId === '0') {
             return false;
-        } else {
-            if (projectId <= projects.length - 1) {
-                projects.splice(projectId, 1);
-                return true;
-            }
         }
+        if (projectId <= projects.length - 1) {
+            projects.splice(projectId, 1);
+            return true;
+        }
+
         return false;
     };
     const clearProjects = () => {
@@ -63,22 +59,20 @@ export const todoBook = (username) => {
         selectedProject = project;
     };
 
-    const getDomSelectedProject = () => {
-        return selectedProject;
-    };
+    const getDomSelectedProject = () => selectedProject;
 
     const convertJSONtoProjects = (json) => {
         json.projects.forEach(element => {
-            let project_to_add = addProject(element.name);
+            const project_to_add = addProject(element.name);
             element.items.forEach(item => {
-                let item_to_add = todoItem(item.title, item.description, new Date(item.dueDate), item.priority);
+                const item_to_add = todoItem(item.title, item.description, new Date(item.dueDate), item.priority, item.status);
                 project_to_add.addItem(item_to_add);
             });
         });
-        console.log("PROJECTS LENGTH :" + projects.length)
-        console.log("HERE IS THE PROJECT read :" + projects[0].getName());
+        console.log(`PROJECTS LENGTH :${projects.length}`);
+        console.log(`HERE IS THE PROJECT read :${projects[0].getName()}`);
         console.log(json);
-    }
+    };
 
     return {
         getUser,
@@ -98,6 +92,6 @@ export const todoBook = (username) => {
         setProjects,
         convertJSONtoProjects,
     };
-}
+};
 
 export default todoBook;
