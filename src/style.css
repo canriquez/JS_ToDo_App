@@ -31,7 +31,6 @@
   background-color: yellow;
 }
 
-
 /* ================= Todo Item Cards =============== */
 
 .projectItem {
@@ -114,10 +113,13 @@
   margin-left: 50%;
 }
 
+.complete-check span:hover {
+  color: blue !important;
+}
+
 .remove-item span {
   margin-right: 50%;
 }
-
 
 /* COmpleted Items */
 

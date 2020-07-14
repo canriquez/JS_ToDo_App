@@ -51,6 +51,11 @@ export const DisplayController = (() => {
     document.getElementById('inputDate').value = '';
   };
 
+  /* General Render and Listener Management */
+
+
+
+
   return {
     prepareProjectObject,
     prepareItemObject,
