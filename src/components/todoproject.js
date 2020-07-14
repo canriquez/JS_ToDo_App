@@ -24,7 +24,9 @@ export const todoProject = (name, projectid) => {
     item.setProject(projectId);
     projectItems.push(item);
   };
-  const itemExists = (item) => projectItems.some((current) => current.getTitle().toLowerCase() === item.getTitle().toLowerCase());
+  const itemExists = (item) => projectItems.some(
+    (current) => current.getTitle().toLowerCase() === item.getTitle().toLowerCase(),
+  );
 
   const removeItem = (itemId) => {
     if (itemId <= projectItems.length - 1) {

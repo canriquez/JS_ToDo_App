@@ -16,39 +16,39 @@ export const Storage = (() => {
 
   const saveBook = (book) => {
     // console.log(book.getProjects());
-    const projects_in_book = book.getProjects();
+    const projectsInBook = book.getProjects();
     // translate item into jason
-    const book_project = {};
-    let array_of_items_in_project = [];
+    const bookProject = {};
+    let arrayOfItemsInProject = [];
     let item;
 
-    const array_projects_to_save = [];
+    const arrayProjectsToSave = [];
 
-    for (let i = 0; i < projects_in_book.length; i += 1) {
-      array_of_items_in_project = projects_in_book[i].getProjectItems();
-      const project_object = {};
-      project_object.name = projects_in_book[i].getName();
-      project_object.projectId = projects_in_book[i].getProjectId();
+    for (let i = 0; i < projectsInBook.length; i += 1) {
+      arrayOfItemsInProject = projectsInBook[i].getProjectItems();
+      const projectObject = {};
+      projectObject.name = projectsInBook[i].getName();
+      projectObject.projectId = projectsInBook[i].getProjectId();
 
-      const array_items_to_save = [];
-      for (let j = 0; j < array_of_items_in_project.length; j += 1) {
-        const json_item = {};
-        item = array_of_items_in_project[j];
-        json_item.title = item.getTitle();
-        json_item.description = item.getDescription();
-        json_item.dueDate = item.getDueDate();
-        json_item.priority = item.getPriority();
-        json_item.status = item.getStatus();
-        json_item.projectId = item.getProjectId();
-        array_items_to_save.push(json_item);
+      const arrayItemsToSave = [];
+      for (let j = 0; j < arrayOfItemsInProject.length; j += 1) {
+        const jsonItem = {};
+        item = arrayOfItemsInProject[j];
+        jsonItem.title = item.getTitle();
+        jsonItem.description = item.getDescription();
+        jsonItem.dueDate = item.getDueDate();
+        jsonItem.priority = item.getPriority();
+        jsonItem.status = item.getStatus();
+        jsonItem.projectId = item.getProjectId();
+        arrayItemsToSave.push(jsonItem);
       }
-      project_object.items = array_items_to_save;
-      array_projects_to_save.push(project_object);
+      projectObject.items = arrayItemsToSave;
+      arrayProjectsToSave.push(projectObject);
     }
 
-    book_project.projects = array_projects_to_save;
-    storeObject(book_project);
-    console.log(`generating initialized book: ${JSON.stringify(book_project)}`);
+    bookProject.projects = arrayProjectsToSave;
+    storeObject(bookProject);
+    console.log(`generating initialized book: ${JSON.stringify(bookProject)}`);
   };
 
   return {

@@ -1,5 +1,3 @@
-import { format } from 'date-fns';
-
 const { default: todoProject } = require('./todoproject');
 const { default: todoItem } = require('./todoitem');
 
@@ -36,9 +34,9 @@ export const DisplayController = (() => {
 
   const selectDomProject = (project) => {
     console.log(`select dom ${project}`);
-    const project_items = document.getElementsByClassName('projectItem');
-    for (let i = 0; i < project_items.length; i += 1) {
-      project_items[i].classList.remove('selectedProject');
+    const projectItems = document.getElementsByClassName('projectItem');
+    for (let i = 0; i < projectItems.length; i += 1) {
+      projectItems[i].classList.remove('selectedProject');
     }
     console.log('domproj');
     const domProject = document.getElementById(`p${project}`);
