@@ -13,7 +13,7 @@
         <nav class="navbar navbar-light bg-light">
             <a class="navbar-brand d-flex flex-row " href="#">
                 <div id="brandLogo"></div>
-                <p>TODO WEB APP</p>
+                <h1>Dynamic TODO</h1>
             </a>
         </nav>
     </header>
@@ -22,7 +22,8 @@
             <div class="input-group mb-3">
                 <input id="projectName" type="text" class="form-control" placeholder="Project's name">
                 <div class="input-group-append">
-                    <button id="btnAddProject" class="btn btn-success" type="button"><i class="glyphicon glyphicon-plus"></i> Add Project</button>
+                    <button id="btnAddProject" class="btn btn-success" type="button"><i
+                            class="glyphicon glyphicon-plus"></i> Add Project</button>
                 </div>
             </div>
             <div id="projectItems"></div>
@@ -30,21 +31,29 @@
         <div id="todoItems" class="todoItems d-flex flex-column">
             <div id="form-container"></div>
             <div class="items-container mt-3">
-                <div class="alert alert-secondary due-groups" role="alert">
-                    <h2>Today</h2>
-                    <p id="today-count"></p>
-                </div>
-                <div id="today"></div>
+                <a data-toggle="collapse" href="#today" role="button" aria-expanded="false" aria-controls="today">
+                    <div class="alert alert-secondary due-groups" role="alert">
+                        <h2>Today</h2>
+                        <p id="today-count"></p>
+                    </div>
+                </a>
+                <div id="today" class="collapse"></div>
+                <a data-toggle="collapse" href="#tomorrow" role="button" aria-expanded="false" aria-controls="tomorrow">
+
                 <div class="alert alert-secondary  due-groups" role="alert">
                     <h2>Tomorrow</h2>
                     <p id="tomorrow-count"></p>
                 </div>
-                <div id="tomorrow"></div>
+                </a>
+                <div id="tomorrow" class="collapse"></div>
+                <a data-toggle="collapse" href="#later" role="button" aria-expanded="false" aria-controls="later">
+
                 <div class="alert alert-secondary  due-groups" role="alert">
-                    <h3>Later</h3>
+                    <h2>Later</h2>
                     <p id="later-count"></p>
                 </div>
-                <div id="later"></div>
+                </a>
+                <div id="later" class="collapse"></div>
             </div>
     </section>
 

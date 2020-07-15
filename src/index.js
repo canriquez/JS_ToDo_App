@@ -22,10 +22,31 @@ const book = todoBook('user1');
 function loadDummyProjects() {
     const p1 = book.addProject('TODO APP');
     const item1 = todoItem('Define Data model', 'Create excel with data model and methods', new Date(), 'high');
-    const item2 = todoItem('Create basic Factories', 'Create factory files and methods', new Date(), 'high');
-
+    const item2 = todoItem('Create basic Factories', 'Create factory files and methods', new Date("2020/07/16"), 'high');
+    const item3 = todoItem('Create basic Factories', 'Create factory files and methods', new Date("2020/07/17"), 'high');
+    p1.addItem(item1);
+    p1.addItem(item1);
+    p1.addItem(item1);
+    p1.addItem(item1);
+    p1.addItem(item1);
+    p1.addItem(item1);
     p1.addItem(item1);
     p1.addItem(item2); // Item added into the project's array with the project Id Set.
+    p1.addItem(item2);
+    p1.addItem(item2);
+    p1.addItem(item2);
+    p1.addItem(item2);
+    p1.addItem(item2);
+    p1.addItem(item2);
+    p1.addItem(item3);
+    p1.addItem(item3);
+    p1.addItem(item3);
+    p1.addItem(item3);
+    p1.addItem(item3);
+    p1.addItem(item3);
+    p1.addItem(item3);
+    p1.addItem(item3);
+    p1.addItem(item3);
 
     console.log('our projects: ');
     console.log(book.getProjects());
