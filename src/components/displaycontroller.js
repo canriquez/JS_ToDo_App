@@ -56,6 +56,47 @@ export const DisplayController = (() => {
 
   /* General Render and Listener Management */
 
+  //Render new project Item Form
+
+  const renderNewItemForm = () => {
+    const todayDate = new Date();
+
+
+    let htmlTag = `<form id="addProject">
+          <div class="form-row">
+              <div class="form-group col-md-6">
+                  <label for="inputTitle">Title</label>
+                  <input type="text" class="form-control" id="inputTitle" placeholder="Title">
+              </div>
+              <div class="form-group col-md-3">
+                  <label for="inputDate">Due date</label>
+                  <input type="date" 
+                  value="${format(new Date(), 'yyyy-MM-dd')}" 
+                  class="form-control" id="inputDate">
+              </div>
+              <div class="form-group col-md-3">
+                  <label for="inputPriority">Priority</label>
+                  <select id="inputPriority" class="form-control">
+                <option value="low" selected>Low</option>
+                <option value="medium">Medium</option>
+                <option value="high">High</option>                      
+              </select>
+              </div>
+          </div>
+          <div class="form-group">
+              <label for="inputDescription">Description</label>
+              <input type="text" class="form-control" id="inputDescription" placeholder="Brief description">
+          </div>
+          <button type="button" id="btnAddItem" class="btn btn-success align-self-end">
+              Add ToDo  
+              <i class="glyphicon glyphicon-plus"></i>
+          </button> 
+          </form>`;
+    document.getElementById('form-container').innerHTML = htmlTag;
+
+  };
+
+
   // Render projects
   //safe
   const renderProjects = (book) => {
@@ -591,6 +632,7 @@ export const DisplayController = (() => {
     addProjectEditListeners,
     prepareProjects,
     prepareItems,
+    renderNewItemForm,
 
   };
 })();

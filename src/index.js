@@ -54,6 +54,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initializeBookStorage(); // Creates a new book or reads existing storage
 
     book.setDomSelectedProject(0); // sets project default as selected;
+    DisplayController.renderNewItemForm();
     DisplayController.prepareProjects(book);
 
     // add listener to buttons
@@ -90,7 +91,7 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
         currentProject.addItem(domItem);
-        DisplayController.clearItemProjectForm();
+        DisplayController.renderNewItemForm();
         DisplayController.prepareProjects(book);
     });
 });
