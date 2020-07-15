@@ -29,6 +29,10 @@ nav h1 {
   height: 78vh;
 }
 
+.input-group {
+  margin-top: 90px;
+}
+
 #projectItems {
   height: 70vh;
   overflow: hidden;
