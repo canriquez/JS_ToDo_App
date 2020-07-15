@@ -102,7 +102,10 @@ export const DisplayController = (() => {
   const renderProjects = (book) => {
     let htmlTag = '';
     for (let i = 0; i < book.getProjects().length; i += 1) {
-      let iCount = book.getProjects()[i].getProjectItems().length;
+      //counts the number of "open" intems in the project
+      let iCount = book.getProjects()[i].
+        getItemDueGroupsCount().
+        reduce((sum, groupCount) => sum + groupCount);
       htmlTag += `<div class="card projectItem" data-index="${i}" id="p${i}">        
       <div class="card-body d-flex flex-row justify-content-between align-items-center">
           <p class="project-count">${iCount > 0 ? '(' + iCount + ')' : ""}</p>
