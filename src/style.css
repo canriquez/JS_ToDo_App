@@ -238,3 +238,121 @@ nav h1 {
   color: red;
   cursor: pointer;
 }
+
+@media only screen and (min-width: 320px) and (max-width: 414px) {
+  nav {
+    width: 100vw;
+    margin: 0px 10px 5px 10px;
+  }
+
+  nav h1 {
+    font-size: 2rem;
+  }
+  .projectBook {
+    potision: relative;
+    display: flex !important;
+    flex-direction: row;
+    flex-wrap: wrap;
+    padding-top: 0px;
+    margin-top: 110px;
+  }
+
+  .projects {
+    position: fixed;
+    top: 15%;
+    left: 0;
+    padding: 0 15px;
+    width: 100vw;
+    grid-area: none;
+    height: 30vh;
+  }
+
+  .input-group {
+    margin-bottom: 0px !important;
+  }
+
+  #projectItems {
+    height: 20vh;
+  }
+
+  #projectItems .card-body {
+    padding: 2px;
+  }
+
+  #projectItems .card-body p {
+    font-size: 0.8rem;
+  }
+
+  .todoItems {
+    position: fixed;
+    top: 50%;
+    left: 0px;
+    padding: 0 15px;
+    width: 100vw;
+    height: 40vh;
+    grid-area: none;
+    overflow: hidden;
+    overflow-y: scroll;
+    padding: 5px 10px;
+  }
+
+  #form-container .form-group {
+    margin-bottom: 0px;
+  }
+
+  #form-container .form-group label {
+    display: none;
+  }
+
+  .items-container {
+    overflow: visible;
+    overflow-y: unset;
+    padding: 5px 10px;
+    height: 50vh;
+  }
+
+  /* Card items */
+
+  .card-body {
+    padding-left: 0px;
+    padding-right: 0px;
+  }
+
+  .card-body h3 {
+    font-size: 1rem;
+    font-weight: bold;
+  }
+
+  .item-info {
+    padding: 5px 10px;
+  }
+
+  .due-box {
+    width: 70%;
+  }
+  .due-box h5 {
+    font-size: 1rem;
+  }
+  .due-box p {
+    font-size: 0.9rem;
+  }
+
+  .priority {
+    width: 30%;
+    margin: 0;
+  }
+
+  .item-status {
+    width: 70%;
+  }
+
+  .complete-check span {
+    font-size: 1.2rem;
+    margin: 0 3px 0 3px;
+  }
+
+  .remove-item span {
+    margin: 0 3px 0 3px;
+    font-size: 1.2rem;
+  }
+}
