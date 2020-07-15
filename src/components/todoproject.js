@@ -1,3 +1,5 @@
+import { differenceInCalendarDays } from 'date-fns';
+
 export const todoProject = (name, projectid) => {
   let projectStatus = 'open';
   const projectId = projectid;
@@ -35,6 +37,22 @@ export const todoProject = (name, projectid) => {
     }
     return false;
   };
+
+  const getItemDueGroupsCount = () => {
+    let report = [0, 0, 0];
+    projectItems.forEach(item => {
+      const result = differenceInCalendarDays(item.getDueDate(), new Date());
+      if (result === 0 && item.getStatus() === 'open') {
+        report[0] += 1;
+      } else if (result === 1 && item.getStatus() === 'open') {
+        report[1] += 1;
+      } else if (item.getStatus() === 'open') {
+        report[2] += 1;
+      }
+    });
+    return report;
+  };
+
   return {
     getName,
     getProjectId,
@@ -48,6 +66,7 @@ export const todoProject = (name, projectid) => {
     getEditing,
     clearEditing,
     setName,
+    getItemDueGroupsCount,
   };
 };
 

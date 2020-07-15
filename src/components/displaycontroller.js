@@ -61,8 +61,10 @@ export const DisplayController = (() => {
   const renderProjects = (book) => {
     let htmlTag = '';
     for (let i = 0; i < book.getProjects().length; i += 1) {
+      let iCount = book.getProjects()[i].getProjectItems().length;
       htmlTag += `<div class="card projectItem" data-index="${i}" id="p${i}">        
       <div class="card-body d-flex flex-row justify-content-between align-items-center">
+          <p class="project-count">${iCount > 0 ? '(' + iCount + ')' : ""}</p>
           <p class="editProjectName" data-index="${i}" project m-0">${book.getProjects()[i].getName()}</p>
           <div class="action-icons d-flex flex-row justify-content-around align-items-center">
               <span id="remove${i}" class="glyphicon glyphicon-remove action-remove-project" data-index=${i}></span>
@@ -93,6 +95,8 @@ export const DisplayController = (() => {
     let htmlTagToday = '';
     let htmlTagTomorrow = '';
     let htmlTagLater = '';
+    let dueGroups = projectObj.getItemDueGroupsCount();
+    console.log("item due groups are :" + dueGroups)
 
     let i = 0;
     /* book.getSingleProject(projectObj).getProjectItems().forEach(item => { */
@@ -179,9 +183,15 @@ export const DisplayController = (() => {
       i += 1;
     });
 
+    document.getElementById('today-count').innerHTML = "";
+    document.getElementById('tomorrow-count').innerHTML = "";
+    document.getElementById('later-count').innerHTML = "";
     document.getElementById('today').innerHTML = htmlTagToday;
     document.getElementById('tomorrow').innerHTML = htmlTagTomorrow;
     document.getElementById('later').innerHTML = htmlTagLater;
+    if (dueGroups[0] != 0) { document.getElementById('today-count').innerHTML = '(' + dueGroups[0] + ')'; }
+    if (dueGroups[1] != 0) { document.getElementById('tomorrow-count').innerHTML = '(' + dueGroups[1] + ')'; }
+    if (dueGroups[2] != 0) { document.getElementById('later-count').innerHTML = '(' + dueGroups[2] + ')'; }
   }
 
   //move
@@ -527,6 +537,7 @@ export const DisplayController = (() => {
       console.log(`Now Item is:${currentItem.getStatus()}`);
       // eslint-disable-next-line no-use-before-define
       //prepareItems(book.getDomSelectedProjectObject());
+
       book.getDomSelectedProjectObject().clearEditing();
       renderItems(book.getDomSelectedProjectObject())
       addCompleteItemListeners(book);
