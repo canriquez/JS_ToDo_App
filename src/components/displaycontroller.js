@@ -41,7 +41,7 @@ export const DisplayController = (() => {
     for (let i = 0; i < projectItems.length; i += 1) {
       projectItems[i].classList.remove('selectedProject');
     }
-    console.log('domproj');
+    console.log('SELECTING DOM PROJECT');
     const domProject = document.getElementById(`p${project}`);
     console.log('class');
     domProject.classList.add('selectedProject');
@@ -57,8 +57,8 @@ export const DisplayController = (() => {
   /* General Render and Listener Management */
 
   // Render projects
-  //move
-  const renderProjects = () => {
+  //safe
+  const renderProjects = (book) => {
     let htmlTag = '';
     for (let i = 0; i < book.getProjects().length; i += 1) {
       htmlTag += `<div class="card projectItem" data-index="${i}" id="p${i}">        
@@ -85,14 +85,18 @@ export const DisplayController = (() => {
     return 'badge badge-pill badge-primary';
   }
 
+
+
   //move
-  const renderItems = (project) => {
+  // This method must recieve the current selected project object
+  const renderItems = (projectObj) => {
     let htmlTagToday = '';
     let htmlTagTomorrow = '';
     let htmlTagLater = '';
 
     let i = 0;
-    book.getSingleProject(project).getProjectItems().forEach(item => {
+    /* book.getSingleProject(projectObj).getProjectItems().forEach(item => { */
+    projectObj.getProjectItems().forEach(item => {
       console.log('rendering items in the today/tomorrow groups');
       console.log(item.getDueDate());
 
@@ -181,16 +185,18 @@ export const DisplayController = (() => {
   }
 
   //move
-  const addListenersToProjects = () => {
+  const addListenersToProjects = (book) => {
     // add listener to projects
     const projectItems = document.getElementsByClassName('projectItem');
     const showListProjects = function showListProjects() {
       if (book.getEditing()) { return; }
-      console.log(`click on select project : ${this.getAttribute('data-index')}`);
+      console.log(`click on select HEY projectObj : ${this.getAttribute('data-index')}`);
       book.setDomSelectedProject(this.getAttribute('data-index'));
-      DisplayController.selectDomProject(this.getAttribute('data-index'));
+      selectDomProject(this.getAttribute('data-index'));
       // eslint-disable-next-line no-use-before-define
-      prepareItems();
+      prepareItems(book.getDomSelectedProjectObject());
+      addCompleteItemListeners(book);
+      addItemActionListeners(book);
     };
     for (let i = 0; i < projectItems.length; i += 1) {
       projectItems[i].addEventListener('click', showListProjects, false);
@@ -205,7 +211,9 @@ export const DisplayController = (() => {
       currentProject.clearEditing();
       event.stopPropagation();
       // eslint-disable-next-line no-use-before-define
-      prepareItems();
+      prepareItems(book.getDomSelectedProjectObject());
+      addCompleteItemListeners(book);
+      addItemActionListeners(book);
     };
     for (let i = 0; i < itemsCancelAction.length; i += 1) {
       itemsCancelAction[i].addEventListener('click', cancelItem, false);
@@ -213,7 +221,7 @@ export const DisplayController = (() => {
   }
 
   //move
-  const addItemUpdateListeners = () => {
+  const addItemUpdateListeners = (book) => {
     const itemsUpdateAction = document.getElementsByClassName('action-save-item');
 
     const saveItem = function saveItem(event) {
@@ -241,7 +249,17 @@ export const DisplayController = (() => {
       }
 
       // eslint-disable-next-line no-use-before-define
-      prepareItems();
+      //prepareItems(book.getDomSelectedProjectObject());
+      //addCompleteItemListeners(book);
+      //addItemActionListeners(book);
+
+      book.getDomSelectedProjectObject().clearEditing();
+      renderItems(book.getDomSelectedProjectObject())
+      addCompleteItemListeners(book);
+      addItemActionListeners(book);
+      Storage.saveBook(book);
+
+
       console.log('now trying to clear editing flag');
       currentProject.clearEditing();
       console.log(`Just finished editing. editing item? : ${currentProject.getEditing()}`);
@@ -255,13 +273,13 @@ export const DisplayController = (() => {
   }
 
   //move
-  const addProjectCancelListeners = () => {
+  const addProjectCancelListeners = (book) => {
     const cancelAction = document.getElementsByClassName('action-cancel-project');
     const cancelProject = function cancelProject(event) {
       book.clearEditing();
       event.stopPropagation();
       // eslint-disable-next-line no-use-before-define
-      prepareProjects();
+      prepareProjects(book);
     };
     for (let i = 0; i < cancelAction.length; i += 1) {
       cancelAction[i].addEventListener('click', cancelProject, false);
@@ -269,7 +287,7 @@ export const DisplayController = (() => {
   }
 
   //move
-  const addProjectUpdateListeners = () => {
+  const addProjectUpdateListeners = (book) => {
     const updateAction = document.getElementsByClassName('action-save-project');
 
     const saveProject = function saveProject(event) {
@@ -285,7 +303,7 @@ export const DisplayController = (() => {
       event.stopPropagation();
       console.log(`...and event propagation halted after editing Title ${currentProject.getName()}`);
       // eslint-disable-next-line no-use-before-define
-      prepareProjects();
+      prepareProjects(book);
     };
 
     for (let i = 0; i < updateAction.length; i += 1) {
@@ -294,7 +312,7 @@ export const DisplayController = (() => {
   }
 
   //move
-  const addProjectEditListeners = () => {
+  const addProjectEditListeners = (book) => {
     const projectsTitleEditAction = document.getElementsByClassName('editProjectName');
 
 
@@ -307,9 +325,17 @@ export const DisplayController = (() => {
 
       console.log(`Changing selected project to ptoject: : ${projectNameToEdit}`);
       book.setDomSelectedProject(this.getAttribute('data-index'));
-      DisplayController.selectDomProject(this.getAttribute('data-index'));
+      selectDomProject(this.getAttribute('data-index'));
       // eslint-disable-next-line no-use-before-define
-      prepareItems();
+      // prepareItems(book.getDomSelectedProjectObject());
+      // addCompleteItemListeners(book);
+      // addItemActionListeners(book);
+
+      book.getDomSelectedProjectObject().clearEditing();
+      renderItems(book.getDomSelectedProjectObject())
+      addCompleteItemListeners(book);
+      addItemActionListeners(book);
+      Storage.saveBook(book);
 
       const selecteProject = book.getDomSelectedProject();
 
@@ -334,8 +360,8 @@ export const DisplayController = (() => {
         return;
       }
 
-      addProjectCancelListeners(); //move
-      addProjectUpdateListeners(); //move
+      addProjectCancelListeners(book); //move
+      addProjectUpdateListeners(book); //move
     };
 
     for (let i = 0; i < projectsTitleEditAction.length; i += 1) {
@@ -344,24 +370,28 @@ export const DisplayController = (() => {
   }
 
   //move
-  const addItemActionListeners = () => {
+  const addItemActionListeners = (book) => {
     const itemsRemoveAction = document.getElementsByClassName('action-remove-item');
     const itemsTitleEditAction = document.getElementsByClassName('editItem');
 
     const removeItem = function removeItem() {
-      console.log('click on removeItem');
-      console.log(this.getAttribute('data-index'));
+      console.log('click on removeItem' + this.getAttribute('data-index'));
       console.log(`click Item remove - project : ${book.getDomSelectedProject()} - item :${this.getAttribute('data-index')}`);
       const currentProject = book.getSingleProject(book.getDomSelectedProject());
       currentProject.removeItem(this.getAttribute('data-index'));
       // eslint-disable-next-line no-use-before-define
-      prepareItems();
+      //prepareItems(book.getDomSelectedProjectObject());
+      book.getDomSelectedProjectObject().clearEditing();
+      renderItems(book.getDomSelectedProjectObject())
+      addCompleteItemListeners(book);
+      addItemActionListeners(book);
+      Storage.saveBook(book);
     };
 
     const editItem = function editItem(event) {
       const currentProject = book.getSingleProject(book.getDomSelectedProject());
       const item = this.getAttribute('data-index');
-
+      console.log('click on removeItem' + this.getAttribute('data-index'));
       const element = this.getAttribute('data-element');
       const itemObject = currentProject.getProjectItems()[item];
       const itemStatus = itemObject.getStatus();
@@ -430,8 +460,8 @@ export const DisplayController = (() => {
           break;
       }
 
-      addItemUpdateListeners(); //move
-      addItemCancelListers(); //move
+      addItemUpdateListeners(book); //move
+      addItemCancelListers(book); //move
 
       // render accept icon to add changes
       // read new form imputs
@@ -447,10 +477,11 @@ export const DisplayController = (() => {
     }
   }
   //move
-  const addProjectActionListeners = () => {
+  const addProjectActionListeners = (book) => {
     const projects = document.getElementsByClassName('action-remove-project');
+
     const removeProject = function removeProject(event) {
-      const currentProject = book.getSingleProject(book.getDomSelectedProject());
+      const currentProject = book.getSingleProject(this.getAttribute('data-index'));
       console.log("current selected project :" + currentProject.getName())
       console.log("Is someone editing anything? :" + book.getEditing())
       if (book.getEditing()) { return; }
@@ -459,10 +490,10 @@ export const DisplayController = (() => {
       book.setDomSelectedProject(0);
       // eslint-disable-next-line no-use-before-define
       Storage.clearStorage();
-      Storage.saveBook();
+      Storage.saveBook(book);
       book.clearProjects();
       book.convertJSONtoProjects(Storage.getObjectStorage());
-      prepareProjects();
+      prepareProjects(book);
       event.stopPropagation();
       console.log(`...and event propagation halted after killing project ${this.getAttribute('data-index')}`);
     };
@@ -470,8 +501,9 @@ export const DisplayController = (() => {
       projects[i].addEventListener('click', removeProject, false);
     }
   }
+
   //move
-  const addCompleteItemListeners = () => {
+  const addCompleteItemListeners = (book) => {
     const updateItems = document.getElementsByClassName('complete-check');
 
     const toggleItem = function toggleItem() {
@@ -494,7 +526,12 @@ export const DisplayController = (() => {
       }
       console.log(`Now Item is:${currentItem.getStatus()}`);
       // eslint-disable-next-line no-use-before-define
-      prepareItems();
+      //prepareItems(book.getDomSelectedProjectObject());
+      book.getDomSelectedProjectObject().clearEditing();
+      renderItems(book.getDomSelectedProjectObject())
+      addCompleteItemListeners(book);
+      addItemActionListeners(book);
+      Storage.saveBook(book);
     };
 
 
@@ -504,22 +541,26 @@ export const DisplayController = (() => {
   }
 
 
-  const prepareItems = () => {
-    const currentProject = book.getSingleProject(book.getDomSelectedProject());
+  const prepareItems = (currentProject) => {
+    //const currentProject = book.getSingleProject(book.getDomSelectedProject());
+    //const currentProject = book.getDomSelectedProjectObject()
     currentProject.clearEditing();
-    renderItems(book.getDomSelectedProject()); //move
-    addItemActionListeners(); //move
-    addCompleteItemListeners(); //move
-    Storage.saveBook();
+    renderItems(currentProject); //move
+    //addItemActionListeners(); //move
+    //Storage.saveBook(book);
   }
 
-  const prepareProjects = () => {
-    renderProjects(); //move
+  const prepareProjects = (book) => {
+    console.log("Preare project Object Name: " + book.getDomSelectedProjectObject().getName())
+    renderProjects(book); //move
     selectDomProject(book.getDomSelectedProject());
-    addListenersToProjects(); //move
-    addProjectActionListeners(); //move
-    addProjectEditListeners(); //move
-    prepareItems();
+    addListenersToProjects(book); //move
+    addProjectActionListeners(book); //move
+    addProjectEditListeners(book); //move
+    prepareItems(book.getDomSelectedProjectObject());// We now call passing project object
+    Storage.saveBook(book);
+    addCompleteItemListeners(book); //move // Avoid passing the book. check if can be avoided
+    addItemActionListeners(book);
   }
 
 
