@@ -367,4 +367,8 @@ nav h1 {
     margin: 0 3px 0 3px;
     font-size: 1.2rem;
   }
+
+  #btnClearStorage {
+    display: none;
+  }
 }

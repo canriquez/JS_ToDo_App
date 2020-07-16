@@ -3,9 +3,7 @@ export const Storage = (() => {
     localStorage.setItem('book', JSON.stringify(obj));
   };
   const getObjectStorage = () => {
-    console.log(`[existing stored object]: ${localStorage.book}`);
     if (localStorage.getItem('book')) {
-      console.log(`reading the localStorate I got:${localStorage.getItem('book')}`);
       return JSON.parse(localStorage.getItem('book'));
     }
     return false;
@@ -15,13 +13,10 @@ export const Storage = (() => {
   };
 
   const saveBook = (book) => {
-    // console.log(book.getProjects());
     const projectsInBook = book.getProjects();
-    // translate item into jason
     const bookProject = {};
     let arrayOfItemsInProject = [];
     let item;
-
     const arrayProjectsToSave = [];
 
     for (let i = 0; i < projectsInBook.length; i += 1) {
@@ -48,7 +43,6 @@ export const Storage = (() => {
 
     bookProject.projects = arrayProjectsToSave;
     storeObject(bookProject);
-    console.log(`generating initialized book: ${JSON.stringify(bookProject)}`);
   };
 
   return {

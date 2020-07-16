@@ -46,7 +46,6 @@ export const todoBook = (username) => {
   );
 
   const removeProject = (projectId) => {
-    console.log(`rmeove proj${projectId}`);
     if (projectId === '0') {
       return false;
     }
@@ -78,9 +77,6 @@ export const todoBook = (username) => {
         projectToAdd.addItem(itemToAdd);
       });
     });
-    console.log(`PROJECTS LENGTH :${projects.length}`);
-    console.log(`HERE IS THE PROJECT read :${projects[0].getName()}`);
-    console.log(json);
   };
 
   return {
