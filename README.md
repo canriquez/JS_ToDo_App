@@ -28,7 +28,7 @@
 - Each 'project' object has properties and an array of To-Do Item Object.
 - Each Item Object contains basic properties like title, description, dueDate, priority and status.
 - All data objects are created using Factory Functions organized in specific files (todobook.js, todoproject.js, todoitem.js) inside the ./src folder.
-- Main Application functions are: stoprage (in charge of all storage actions), displaycontroller(in charge of rendering, and listeners generation). These functions are created using the module pattern, hosted in specific files (displaycontroller.js, storage.js)
+- Main Application functions are: storage (in charge of all storage actions), displaycontroller(in charge of rendering, and listeners generation). These modules and all required methods are created using the module pattern, hosted in specific files (displaycontroller.js, storage.js)
 
 
 ## Built With
