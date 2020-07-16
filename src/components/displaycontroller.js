@@ -623,7 +623,47 @@ export const DisplayController = (() => {
         addItemActionListeners(book);
     }
 
+    const addListenerItemBtn = (book) => {
+        document.getElementById('btnAddItem').addEventListener('click', () => {
+            const domItem = prepareItemObject();
 
+            if (book.getDomSelectedProject() === -1) {
+                console.log('no project selected');
+                return;
+            }
+            const currentProject = book.getSingleProject(book.getDomSelectedProject());
+            if (domItem.getTitle() === '' || currentProject.itemExists(domItem) || domItem.isOverdue()) {
+                console.log('item title empty');
+                return;
+            }
+            currentProject.addItem(domItem);
+            renderNewItemForm();
+            prepareProjects(book);
+            addListenerItemBtn(book);
+        });
+    }
+
+    const addListenerProjectBtn = (book) => {
+        document.getElementById('btnAddProject').addEventListener('click', () => {
+            console.log("WARNING !: you click add project")
+            let p = prepareProjectObject();
+            const currentProject = book.getSingleProject(book.getDomSelectedProject());
+            console.log("current selected project :" + currentProject.getName())
+            console.log("Is someone editing anything? :" + book.getEditing())
+            if (book.getEditing()) { return; }
+            if (p.getName() === '' || book.projectExists(p)) {
+                console.log('project name empty');
+                return;
+            }
+            p = book.addProject(p.getName());
+            Storage.storeObject(book);
+            console.log('go to select project');
+            console.log(p.getProjectId());
+            book.setDomSelectedProject(p.getProjectId());
+            console.log('selected project');
+            prepareProjects(book);
+        });
+    }
 
     return {
         prepareProjectObject,
@@ -641,7 +681,8 @@ export const DisplayController = (() => {
         prepareProjects,
         prepareItems,
         renderNewItemForm,
-
+        addListenerItemBtn,
+        addListenerProjectBtn,
     };
 })();
 

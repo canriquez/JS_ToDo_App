@@ -65,7 +65,7 @@ function initializeBookStorage() {
     }
 
     console.log(`After reading local storage book : ${book.getSingleProject(0).getName()}`);
-    loadDummyProjects();
+    //loadDummyProjects();
 }
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -79,42 +79,9 @@ document.addEventListener('DOMContentLoaded', () => {
     DisplayController.prepareProjects(book);
 
     // add listener to buttons
-    document.getElementById('btnAddProject').addEventListener('click', () => {
-        console.log("WARNING !: you click add project")
-        let p = DisplayController.prepareProjectObject();
-        const currentProject = book.getSingleProject(book.getDomSelectedProject());
-        console.log("current selected project :" + currentProject.getName())
-        console.log("Is someone editing anything? :" + book.getEditing())
-        if (book.getEditing()) { return; }
-        if (p.getName() === '' || book.projectExists(p)) {
-            console.log('project name empty');
-            return;
-        }
-        p = book.addProject(p.getName());
-        Storage.storeObject(book);
-        console.log('go to select project');
-        console.log(p.getProjectId());
-        book.setDomSelectedProject(p.getProjectId());
-        console.log('selected project');
-        DisplayController.prepareProjects(book);
-    });
+    DisplayController.addListenerProjectBtn(book);
+    DisplayController.addListenerItemBtn(book);
 
-    document.getElementById('btnAddItem').addEventListener('click', () => {
-        const domItem = DisplayController.prepareItemObject();
-
-        if (book.getDomSelectedProject() === -1) {
-            console.log('no project selected');
-            return;
-        }
-        const currentProject = book.getSingleProject(book.getDomSelectedProject());
-        if (domItem.getTitle() === '' || currentProject.itemExists(domItem) || domItem.isOverdue()) {
-            console.log('item title empty');
-            return;
-        }
-        currentProject.addItem(domItem);
-        DisplayController.renderNewItemForm();
-        DisplayController.prepareProjects(book);
-    });
 });
 
 export default book;
