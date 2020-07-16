@@ -3,6 +3,7 @@
 #brandLogo img {
   width: 50px;
 }
+
 nav {
   max-width: 1250px;
   margin: 0 auto;
@@ -72,6 +73,7 @@ nav h1 {
   grid-area: todoItems;
   height: 78vh;
   overflow: hidden;
+  margin-top: 100px;
 }
 
 #today {
@@ -80,12 +82,14 @@ nav h1 {
   overflow-y: scroll;
   padding: 5px 10px;
 }
+
 #tomorrow {
   max-height: 35vh;
   overflow: hidden;
   overflow-y: scroll;
   padding: 5px 10px;
 }
+
 #later {
   max-height: 35vh;
   overflow: hidden;
@@ -252,6 +256,7 @@ nav h1 {
   nav h1 {
     font-size: 2rem;
   }
+
   .projectBook {
     potision: relative;
     display: flex !important;
@@ -334,9 +339,11 @@ nav h1 {
   .due-box {
     width: 70%;
   }
+
   .due-box h5 {
     font-size: 1rem;
   }
+
   .due-box p {
     font-size: 0.9rem;
   }

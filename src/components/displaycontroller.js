@@ -258,7 +258,7 @@ export const DisplayController = (() => {
   }
 
   //move
-  const addItemCancelListers = () => {
+  const addItemCancelListers = (book) => {
     const itemsCancelAction = document.getElementsByClassName('action-cancel-item');
     const cancelItem = function cancelItem(event) {
       const currentProject = book.getSingleProject(book.getDomSelectedProject());
