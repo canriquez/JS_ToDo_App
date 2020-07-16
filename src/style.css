@@ -1,369 +1,352 @@
 /* Navigation */
 
 #brandLogo img {
-  width: 50px;
+    width: 50px;
 }
 
 nav {
-  max-width: 1250px;
-  margin: 0 auto;
+    max-width: 1250px;
+    margin: 0 auto;
 }
 
 nav h1 {
-  margin-left: 20px;
-  font-size: 3rem;
+    margin-left: 20px;
+    font-size: 3rem;
 }
 
 .projectBook {
-  max-width: 1200px;
-  padding: 20px;
-  margin: 0 auto;
-  height: 80vh;
-  display: grid;
-  grid-gap: 20px;
-  grid-template-columns: 30% 70%;
-  grid-template-areas: "projects todoItems";
+    max-width: 1200px;
+    padding: 20px;
+    margin: 0 auto;
+    height: 80vh;
+    display: grid;
+    grid-gap: 20px;
+    grid-template-columns: 30% 70%;
+    grid-template-areas: "projects todoItems";
 }
 
 .projects {
-  grid-area: projects;
-  height: 78vh;
+    grid-area: projects;
+    height: 78vh;
 }
 
 .input-group {
-  margin-top: 90px;
+    margin-top: 90px;
 }
 
 #projectItems {
-  height: 70vh;
-  overflow: hidden;
-  overflow-y: scroll;
-  padding: 5px 10px;
+    height: 70vh;
+    overflow: hidden;
+    overflow-y: scroll;
+    padding: 5px 10px;
 }
 
 .editProjectName {
-  margin-left: 10px;
-  margin-right: auto;
-  font-size: 1.2rem;
-  margin-bottom: 0;
+    margin-left: 10px;
+    margin-right: auto;
+    font-size: 1.2rem;
+    margin-bottom: 0;
 }
 
 .project-count {
-  width: 15%;
-  text-align: center;
-  margin-bottom: 0;
-  margin-bottom: 4px;
-  font-size: 1.2rem;
-  font-weight: bold;
-  color: green;
+    width: 15%;
+    text-align: center;
+    margin-bottom: 0;
+    margin-bottom: 4px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: green;
 }
 
 .items-container {
-  max-height: 45vh;
-  overflow: hidden;
-  overflow-y: scroll;
-  padding: 5px 10px;
+    max-height: 45vh;
+    overflow: hidden;
+    overflow-y: scroll;
+    padding: 5px 10px;
 }
 
 .items-container a {
-  text-decoration: none;
+    text-decoration: none;
 }
 
 .todoItems {
-  grid-area: todoItems;
-  height: 78vh;
-  overflow: hidden;
-  margin-top: 100px;
+    grid-area: todoItems;
+    height: 78vh;
+    overflow: hidden;
+    margin-top: 100px;
 }
 
 #today {
-  max-height: 37vh;
-  overflow: hidden;
-  overflow-y: scroll;
-  padding: 5px 10px;
+    max-height: 37vh;
+    overflow: hidden;
+    overflow-y: scroll;
+    padding: 5px 10px;
 }
 
 #tomorrow {
-  max-height: 35vh;
-  overflow: hidden;
-  overflow-y: scroll;
-  padding: 5px 10px;
+    max-height: 35vh;
+    overflow: hidden;
+    overflow-y: scroll;
+    padding: 5px 10px;
 }
 
 #later {
-  max-height: 35vh;
-  overflow: hidden;
-  overflow-y: scroll;
-  padding: 5px 10px;
+    max-height: 35vh;
+    overflow: hidden;
+    overflow-y: scroll;
+    padding: 5px 10px;
 }
 
 .list-group-item {
-  margin: 0;
+    margin: 0;
 }
 
 .selectedProject {
-  background-color: yellow;
+    background-color: yellow;
 }
 
 .due-groups {
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  margin-bottom: 0px;
-  padding-top: 5px;
-  padding-bottom: 5px;
-  margin: 2px 0px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin-bottom: 0px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    margin: 2px 0px;
 }
 
 .due-groups h3 {
-  margin-bottom: 0;
+    margin-bottom: 0;
 }
 
 .due-groups p {
-  width: 5%;
-  text-align: center;
-  margin-bottom: 0;
-  margin-bottom: 4px;
-  font-size: 1.5rem;
-  font-weight: bold;
-  color: green;
+    width: 5%;
+    text-align: center;
+    margin-bottom: 0;
+    margin-bottom: 4px;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: green;
 }
+
 
 /* ================= Todo Item Cards =============== */
 
 .projectItem {
-  margin: 12px 0;
-  box-shadow: 0 50px 100px rgba(50, 50, 93, 0.05), 0 15px 35px rgba(50, 50, 93, 0.1), 0 5px 15px rgba(0, 0, 0, 0.1);
+    margin: 12px 0;
+    box-shadow: 0 50px 100px rgba(50, 50, 93, 0.05), 0 15px 35px rgba(50, 50, 93, 0.1), 0 5px 15px rgba(0, 0, 0, 0.1);
 }
 
 .card-body {
-  position: relative;
-  padding: 20px 10px;
+    position: relative;
+    padding: 20px 10px;
 }
 
 .due-box {
-  position: absolute;
-  width: 30%;
-  top: 0;
-  right: 0;
+    position: absolute;
+    width: 30%;
+    top: 0;
+    right: 0;
 }
 
 .item-status {
-  position: absolute;
-  width: 15%;
-  bottom: 0;
-  right: 0;
-  background-color: lightblue;
-  color: white;
-  text-align: center;
+    position: absolute;
+    width: 15%;
+    bottom: 0;
+    right: 0;
+    background-color: lightblue;
+    color: white;
+    text-align: center;
 }
 
 .priority {
-  position: absolute;
-  width: 10%;
-  margin: 5px 5px;
-  top: 0;
-  left: 0;
+    position: absolute;
+    width: 10%;
+    margin: 5px 5px;
+    top: 0;
+    left: 0;
 }
 
 .updateItemIcons {
-  position: absolute;
-  margin: 5px 5px;
-  top: 0;
-  left: 11%;
-  color: black;
+    position: absolute;
+    margin: 5px 5px;
+    top: 0;
+    left: 11%;
+    color: black;
 }
 
 .updateItemIcons span {
-  font-size: 1.2rem;
+    font-size: 1.2rem;
 }
 
 .editItem:hover {
-  border: 1px dotted lightblue;
-  cursor: pointer;
+    border: 1px dotted lightblue;
+    cursor: pointer;
 }
 
 .due-box p {
-  margin: 1;
-  text-align: right;
+    margin: 1;
+    text-align: right;
 }
 
 .card-body:hover {
-  background-color: rgba(229, 222, 226, 0.2);
+    background-color: rgba(229, 222, 226, 0.2);
 }
 
 .action-icons {
-  width: 10%;
+    width: 10%;
 }
 
 .action-icons span {
-  font-size: 1.5rem;
+    font-size: 1.5rem;
 }
 
 .complete-check,
 .remove-item {
-  width: 10%;
+    width: 10%;
 }
 
 .complete-check span {
-  text-align: center;
-  font-size: 1.8rem;
-  margin-left: 50%;
+    text-align: center;
+    font-size: 1.8rem;
+    margin-left: 50%;
 }
 
 .complete-check span:hover {
-  color: blue !important;
+    color: blue !important;
 }
 
 .remove-item span {
-  margin-right: 50%;
+    margin-right: 50%;
 }
+
 
 /* COmpleted Items */
 
 .complete-item .complete-check span,
 .complete-item .remove-item span {
-  color: lightgray;
+    color: lightgray;
 }
 
 .complete-item .item-info h3,
 .complete-item .item-info p,
 .complete-item .due-box h5,
 .complete-item .due-box p {
-  text-decoration: line-through;
-  color: lightgray;
+    text-decoration: line-through;
+    color: lightgray;
 }
 
 .complete-item .priority,
 .complete-item .priority p,
 .complete-item .item-status,
 .complete-item .item-status p {
-  background-color: lightgray;
+    background-color: lightgray;
 }
 
 .action-icons span:hover,
 .projectItem .action-icons span:hover {
-  color: red;
-  cursor: pointer;
+    color: red;
+    cursor: pointer;
 }
 
 @media only screen and (min-width: 320px) and (max-width: 414px) {
-  nav {
-    width: 100vw;
-    margin: 0px 10px 5px 10px;
-  }
-
-  nav h1 {
-    font-size: 2rem;
-  }
-
-  .projectBook {
-    potision: relative;
-    display: flex !important;
-    flex-direction: row;
-    flex-wrap: wrap;
-    padding-top: 0px;
-    margin-top: 110px;
-  }
-
-  .projects {
-    position: fixed;
-    top: 15%;
-    left: 0;
-    padding: 0 15px;
-    width: 100vw;
-    grid-area: none;
-    height: 30vh;
-  }
-
-  .input-group {
-    margin-bottom: 0px !important;
-  }
-
-  #projectItems {
-    height: 20vh;
-  }
-
-  #projectItems .card-body {
-    padding: 2px;
-  }
-
-  #projectItems .card-body p {
-    font-size: 0.8rem;
-  }
-
-  .todoItems {
-    position: fixed;
-    top: 50%;
-    left: 0px;
-    padding: 0 15px;
-    width: 100vw;
-    height: 40vh;
-    grid-area: none;
-    overflow: hidden;
-    overflow-y: scroll;
-    padding: 5px 10px;
-  }
-
-  #form-container .form-group {
-    margin-bottom: 0px;
-  }
-
-  #form-container .form-group label {
-    display: none;
-  }
-
-  .items-container {
-    overflow: visible;
-    overflow-y: unset;
-    padding: 5px 10px;
-    height: 50vh;
-  }
-
-  /* Card items */
-
-  .card-body {
-    padding-left: 0px;
-    padding-right: 0px;
-  }
-
-  .card-body h3 {
-    font-size: 1rem;
-    font-weight: bold;
-  }
-
-  .item-info {
-    padding: 5px 10px;
-  }
-
-  .due-box {
-    width: 70%;
-  }
-
-  .due-box h5 {
-    font-size: 1rem;
-  }
-
-  .due-box p {
-    font-size: 0.9rem;
-  }
-
-  .priority {
-    width: 30%;
-    margin: 0;
-  }
-
-  .item-status {
-    width: 70%;
-  }
-
-  .complete-check span {
-    font-size: 1.2rem;
-    margin: 0 3px 0 3px;
-  }
-
-  .remove-item span {
-    margin: 0 3px 0 3px;
-    font-size: 1.2rem;
-  }
+    nav {
+        width: 100vw;
+        margin: 0px 10px 5px 10px;
+    }
+    nav h1 {
+        font-size: 2rem;
+    }
+    .projectBook {
+        potision: relative;
+        display: flex !important;
+        flex-direction: row;
+        flex-wrap: wrap;
+        padding-top: 0px;
+        margin-top: 110px;
+    }
+    .projects {
+        position: fixed;
+        top: 15%;
+        left: 0;
+        padding: 0 15px;
+        width: 100vw;
+        grid-area: none;
+        height: 30vh;
+        margin-top: 0px;
+    }
+    .input-group {
+        margin-bottom: 0px !important;
+        margin-top: 0;
+    }
+    #projectItems {
+        height: 20vh;
+    }
+    #projectItems .card-body {
+        padding: 2px;
+    }
+    #projectItems .card-body p {
+        font-size: 0.8rem;
+    }
+    .todoItems {
+        position: fixed;
+        top: 50%;
+        left: 0px;
+        padding: 0 15px;
+        width: 100vw;
+        height: 40vh;
+        grid-area: none;
+        overflow: hidden;
+        overflow-y: scroll;
+        padding: 5px 10px;
+        margin-top: 0;
+    }
+    #form-container .form-group {
+        margin-bottom: 0px;
+    }
+    #form-container .form-group label {
+        display: none;
+    }
+    .items-container {
+        overflow: visible;
+        overflow-y: unset;
+        padding: 5px 10px;
+        height: 50vh;
+    }
+    /* Card items */
+    .card-body {
+        padding-left: 0px;
+        padding-right: 0px;
+    }
+    .card-body h3 {
+        font-size: 1rem;
+        font-weight: bold;
+    }
+    .item-info {
+        padding: 5px 10px;
+    }
+    .due-box {
+        width: 70%;
+    }
+    .due-box h5 {
+        font-size: 1rem;
+    }
+    .due-box p {
+        font-size: 0.9rem;
+    }
+    .priority {
+        width: 30%;
+        margin: 0;
+    }
+    .item-status {
+        width: 70%;
+    }
+    .complete-check span {
+        font-size: 1.2rem;
+        margin: 0 3px 0 3px;
+    }
+    .remove-item span {
+        margin: 0 3px 0 3px;
+        font-size: 1.2rem;
+    }
 }
