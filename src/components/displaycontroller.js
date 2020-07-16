@@ -57,7 +57,6 @@ export const DisplayController = (() => {
   /* General Render and Listener Management */
 
   // Render new project Item Form
-
   const renderNewItemForm = () => {
     const htmlTag = `<form id="addProject">
           <div class="form-row">
@@ -94,7 +93,6 @@ export const DisplayController = (() => {
 
 
   // Render projects
-  // safe
   const renderProjects = (book) => {
     let htmlTag = '';
     for (let i = 0; i < book.getProjects().length; i += 1) {
@@ -115,7 +113,6 @@ export const DisplayController = (() => {
     document.getElementById('projectItems').innerHTML = htmlTag;
   };
 
-  // move
   const prioStyle = (prio) => {
     console.log(`prios :${prio}`);
     if (prio === 'high') {
@@ -127,8 +124,6 @@ export const DisplayController = (() => {
     return 'badge badge-pill badge-primary';
   };
 
-
-  // move
   // This method must recieve the current selected project object
   const renderItems = (projectObj) => {
     let htmlTagToday = '';
@@ -138,15 +133,10 @@ export const DisplayController = (() => {
     console.log(`item due groups are :${dueGroups}`);
 
     let i = 0;
-    /* book.getSingleProject(projectObj).getProjectItems().forEach(item => { */
     projectObj.getProjectItems().forEach(item => {
       console.log('rendering items in the today/tomorrow groups');
       console.log(item.getDueDate());
-
-      // const date = Date.parse(item.getDueDate());
-      // const todayDate = new Date();
       console.log(`today is: ${format(new Date(), 'dd/MM/yyy')} - Item date is :${format(item.getDueDate(), 'dd/MM/yyy')}`);
-
       const result = differenceInCalendarDays(item.getDueDate(), new Date());
       console.log(`item :${item.getTitle()} due day in: ${result} days.`);
       if (result === 0) {
@@ -260,9 +250,6 @@ export const DisplayController = (() => {
         domItemTag.classList.remove('complete-item');
       }
       console.log(`Now Item is:${currentItem.getStatus()}`);
-      // eslint-disable-next-line no-use-before-define
-      // prepareItems(book.getDomSelectedProjectObject());
-
       book.getDomSelectedProjectObject().clearEditing();
       renderItems(book.getDomSelectedProjectObject());
       addCompleteItemListeners(book);
@@ -286,8 +273,6 @@ export const DisplayController = (() => {
       console.log(`click Item remove - project : ${book.getDomSelectedProject()} - item :${this.getAttribute('data-index')}`);
       const currentProject = book.getSingleProject(book.getDomSelectedProject());
       currentProject.removeItem(this.getAttribute('data-index'));
-      // eslint-disable-next-line no-use-before-define
-      // prepareItems(book.getDomSelectedProjectObject());
       book.getDomSelectedProjectObject().clearEditing();
       renderItems(book.getDomSelectedProjectObject());
       addCompleteItemListeners(book);
@@ -338,18 +323,11 @@ export const DisplayController = (() => {
             break;
         }
 
-        // eslint-disable-next-line no-use-before-define
-        // prepareItems(book.getDomSelectedProjectObject());
-        // addCompleteItemListeners(book);
-        // addItemActionListeners(book);
-
         book.getDomSelectedProjectObject().clearEditing();
         renderItems(book.getDomSelectedProjectObject());
         addCompleteItemListeners(book);
         addItemActionListeners(book);
         Storage.saveBook(book);
-
-
         console.log('now trying to clear editing flag');
         currentProject.clearEditing();
         console.log(`Just finished editing. editing item? : ${currentProject.getEditing()}`);
@@ -370,23 +348,15 @@ export const DisplayController = (() => {
       const itemObject = currentProject.getProjectItems()[item];
       const itemStatus = itemObject.getStatus();
       console.log(`THIS IS THE STATUS OF THE ITEM CLICKED TO EDIT  :${itemStatus}`);
-
-
       const updateIconsTag = document.getElementById(`update-${item}`);
-
       if (itemStatus === 'complete') { return; }
       if (currentProject.getEditing()) { return; }
-
-
       currentProject.setEditing();
-
       this.removeEventListener(event, editItem, true);
       // render inputs on the element's Item to edit
       this.classList.remove('editItem');
-
       console.log(`editing: ${element}`);
       const editDueDate = itemObject.getDueDate();
-
       switch (element) {
         case 'title':
         case 'description':
@@ -434,13 +404,8 @@ export const DisplayController = (() => {
           break;
       }
 
-      addItemUpdateListeners(book); // move
-      addItemCancelListers(book); // move
-
-      // render accept icon to add changes
-      // read new form imputs
-      // save modified item in the project
-      // re-render items
+      addItemUpdateListeners(book);
+      addItemCancelListers(book);
     };
 
     for (let i = 0; i < itemsRemoveAction.length; i += 1) {
@@ -453,12 +418,8 @@ export const DisplayController = (() => {
 
 
   const prepareItems = (currentProject) => {
-    // const currentProject = book.getSingleProject(book.getDomSelectedProject());
-    // const currentProject = book.getDomSelectedProjectObject()
     currentProject.clearEditing();
     renderItems(currentProject); // move
-    // addItemActionListeners(); //move
-    // Storage.saveBook(book);
   };
 
   const addProjectCancelListeners = (book) => {
@@ -512,11 +473,6 @@ export const DisplayController = (() => {
       console.log(`Changing selected project to ptoject: : ${projectNameToEdit}`);
       book.setDomSelectedProject(this.getAttribute('data-index'));
       selectDomProject(this.getAttribute('data-index'));
-      // eslint-disable-next-line no-use-before-define
-      // prepareItems(book.getDomSelectedProjectObject());
-      // addCompleteItemListeners(book);
-      // addItemActionListeners(book);
-
       book.getDomSelectedProjectObject().clearEditing();
       renderItems(book.getDomSelectedProjectObject());
       addCompleteItemListeners(book);
@@ -524,13 +480,10 @@ export const DisplayController = (() => {
       Storage.saveBook(book);
 
       const selecteProject = book.getDomSelectedProject();
-
       console.log(`project name edit Clicked: ${this.getAttribute('data-index')}`);
       console.log(`Now, selected Project is project: ${selecteProject}`);
-
       event.stopPropagation();
       console.log(`Killing propagation after selecting project: ${selecteProject}`);
-
       if (projectNameToEdit === selecteProject) {
         console.log('Lets Edit the Project name');
         book.setEditing();
@@ -601,14 +554,14 @@ export const DisplayController = (() => {
 
   const prepareProjects = (book) => {
     console.log(`Preare project Object Name: ${book.getDomSelectedProjectObject().getName()}`);
-    renderProjects(book); // move
+    renderProjects(book);
     selectDomProject(book.getDomSelectedProject());
-    addListenersToProjects(book); // move
-    addProjectActionListeners(book); // move
-    addProjectEditListeners(book); // move
-    prepareItems(book.getDomSelectedProjectObject()); // We now call passing project object
+    addListenersToProjects(book);
+    addProjectActionListeners(book);
+    addProjectEditListeners(book);
+    prepareItems(book.getDomSelectedProjectObject());
     Storage.saveBook(book);
-    addCompleteItemListeners(book); // move // Avoid passing the book. check if can be avoided
+    addCompleteItemListeners(book);
     addItemActionListeners(book);
   };
 
