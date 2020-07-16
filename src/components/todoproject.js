@@ -39,7 +39,7 @@ export const todoProject = (name, projectid) => {
   };
 
   const getItemDueGroupsCount = () => {
-    let report = [0, 0, 0];
+    const report = [0, 0, 0];
     projectItems.forEach(item => {
       const result = differenceInCalendarDays(item.getDueDate(), new Date());
       if (result === 0 && item.getStatus() === 'open') {
