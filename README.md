@@ -1,61 +1,82 @@
-# Project Name
+# The Todo List Web Application (Dynamic ToDo)
 
-> One paragraph statement about the project.
+> Web Responsive application to create and organize a To-Do list using HTML/CSS and JavaScript
 
-![screenshot](./app_screenshot.png)
-
-Additional description about the project and its features.
-
-## Built With
-
-- Major languages,
-- frameworks,
-- technologies used
 
 ## Live Demo
 
-[Live Demo Link](https://livedemo.com)
+[Live Demo Link](https://rawcdn.githack.com/canriquez/JS_ToDo_App/7965cac08a2c4c4cabf4cc133a881da6bc54f8e2/dist/index.html)
+
+
+![gif-video](./src/readme/todo_app.gif)
+
+## Responsive design images
+
+![responsive](./src/readme/app_responsive.png)
+
+## Application features
+- Organize list items in specific projects.
+- Projects can be created and edited (name only).
+- ToDo Items can be added to projects, including priority.
+- Each Item can be fully edited, close or re-open dynamically.
+- Projects and Item information is saved in the user's local storage
+- Local storage can be clean for evaluation purposes (available only for demo) 
+
+## Data Structure Design | OOP
+
+- Each user session creates a 'book' object with an array of projects
+- Each 'project' object has properties and an array of To-Do Item Object.
+- Each Item Object contains basic properties like title, description, dueDate, priority and status.
+- All data objects are created using Factory Functions organized in specific files (todobook.js, todoproject.js, todoitem.js) inside the ./src folder.
+- Main Application functions are: storage (in charge of all storage actions), displaycontroller(in charge of rendering, and listeners generation). These modules and all required methods are created using the module pattern, hosted in specific files (displaycontroller.js, storage.js)
+
+
+## Built With
+
+- JavaScript, HTML/CSS, Bootstrap
+- Webpack, NPM
+- VScode
 
 
 ## Getting Started
 
-**This is an example of how you may give instructions on setting up your project locally.**
-**Modify this file to match your project, remove sections that don't apply. For example: delete the testing section if the currect project doesn't require testing.**
 
-
-To get a local copy up and running follow these simple example steps.
+To get a local copy up and running, follow these simple example steps.
 
 ### Prerequisites
+- To install the app in your system, make sure you have node/npm installed. [get npm](https://www.npmjs.com/get-npm)
 
 ### Setup
+- Clone the repository in your system by using: 
+
+``` git clone git@github.com:canriquez/JS_ToDo_App.git ```
 
 ### Install
+- Next step is to CD into the local repository and run:
 
-### Usage
-
-### Run tests
-
-### Deployment
+``` $ npm install ```  
+``` $ npm run build ``` 
 
 
 
-## Authors
+## Author
 
-👤 **Author1**
+👤 ***Carlos Anriquez***
 
-- Github: [@githubhandle](https://github.com/githubhandle)
-- Twitter: [@twitterhandle](https://twitter.com/twitterhandle)
-- Linkedin: [linkedin](https://linkedin.com/linkedinhandle)
+- Github: [@canriquez](https://github.com/canriquez)
+- Twitter: [@cranriquez](https://twitter.com/cranriquez)
+- Linkedin: [linkedin](https://www.linkedin.com/in/carlosanriquez/)
+- Portfolio: [carlosanriquez.com](https://www.carlosanriquez.com)
 
-👤 **Author2**
+👤 ***Xóchitl Selene Flores Pérez***
 
-- Github: [@githubhandle](https://github.com/githubhandle)
-- Twitter: [@twitterhandle](https://twitter.com/twitterhandle)
-- Linkedin: [linkedin](https://linkedin.com/linkedinhandle)
+- Github: [@enelesmai](https://github.com/enelesmai)
+- Twitter: [@enelesmai](https://twitter.com/enelesmai)
+- Linkedin: [xochitlselene](https://linkedin.com/in/xochitlselene)
 
 ## 🤝 Contributing
 
-Contributions, issues and feature requests are welcome!
+Contributions, issues, and feature requests are welcome!
 
 Feel free to check the [issues page](issues/).
 
@@ -65,10 +86,9 @@ Give a ⭐️ if you like this project!
 
 ## Acknowledgments
 
-- Hat tip to anyone whose code was used
-- Inspiration
-- etc
+- Family, always my family.
+- The Beagles!
 
 ## 📝 License
 
-This project is [MIT](lic.url) licensed.
+This project is [MIT](./LICENSE) licensed.
