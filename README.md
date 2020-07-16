@@ -2,6 +2,12 @@
 
 > Web Responsive application to create and organize a To-Do list using HTML/CSS and JavaScript
 
+
+## Live Demo
+
+[Live Demo Link](https://rawcdn.githack.com/canriquez/JS_ToDo_App/7965cac08a2c4c4cabf4cc133a881da6bc54f8e2/dist/index.html)
+
+
 ![gif-video](./src/readme/todo_app.gif)
 
 ## Responsive design images
@@ -30,10 +36,6 @@
 - JavaScript, HTML/CSS, Bootstrap
 - Webpack, NPM
 - VScode
-
-## Live Demo
-
-[Live Demo Link](https://livedemo.com)
 
 
 ## Getting Started
